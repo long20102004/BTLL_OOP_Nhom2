@@ -1,177 +1,294 @@
-# BTLL_OOP_Nhom2
-# Tính Năng Cần Thiết cho Trang Web Mạng Xã Hội Dành Cho Lập Trình Viên
+# Thiết Kế Cơ Sở Dữ Liệu Mở Rộng cho Trang Web Mạng Xã Hội
 
-Khi phát triển một trang web mạng xã hội như Stack Overflow , các tính năng chính cần xem xét bao gồm:
+## 1. Bảng `users`
+- **Mục đích:** Lưu trữ thông tin người dùng.
 
-## 1. Hệ thống Đăng ký và Đăng nhập
-- **Lý do:** Đảm bảo người dùng có tài khoản cá nhân để theo dõi hoạt động, tham gia thảo luận và quản lý nội dung của mình.
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| id           | integer      | Khóa chính, tự động tăng                   |
+| username     | varchar      | Tên người dùng                             |
+| email        | varchar      | Địa chỉ email người dùng                   |
+| password_hash | varchar     | Mật khẩu đã băm                            |
+| role         | varchar      | Vai trò (user, admin, v.v.)                |
+| created_at   | timestamp    | Thời điểm tạo tài khoản                    |
 
-## 2. Giao diện người dùng thân thiện
-- **Lý do:** Một giao diện dễ sử dụng giúp người dùng điều hướng dễ dàng, tạo trải nghiệm tích cực khi sử dụng trang web.
+## 2. Bảng `posts`
+- **Mục đích:** Lưu trữ bài viết của người dùng.
 
-## 3. Chức năng Tìm kiếm mạnh mẽ
-- **Lý do:** Người dùng cần tìm kiếm câu hỏi, câu trả lời, và thẻ cụ thể nhanh chóng và hiệu quả, tiết kiệm thời gian và công sức.
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| id           | integer      | Khóa chính, tự động tăng                   |
+| title        | varchar      | Tiêu đề bài viết                           |
+| body         | text         | Nội dung bài viết                          |
+| user_id      | integer      | Khóa ngoại tham chiếu đến người dùng (users.id) |
+| status       | varchar      | Trạng thái bài viết (draft, published)     |
+| created_at   | timestamp    | Thời điểm tạo bài viết                     |
 
-## 4. Tính năng Đặt câu hỏi
-- **Lý do:** Khuyến khích người dùng đặt câu hỏi khi họ gặp vấn đề, đồng thời cung cấp thông tin rõ ràng để cộng đồng có thể trả lời.
+## 3. Bảng `follows`
+- **Mục đích:** Lưu trữ mối quan hệ theo dõi giữa người dùng.
 
-## 5. Chức năng Trả lời câu hỏi
-- **Lý do:** Cho phép người dùng chia sẻ kiến thức và kinh nghiệm của mình, tạo ra nội dung có giá trị cho cộng đồng.
+| Tên cột             | Kiểu dữ liệu | Mô tả                                       |
+|---------------------|--------------|---------------------------------------------|
+| following_user_id   | integer      | Khóa ngoại tham chiếu đến người dùng theo dõi (users.id) |
+| followed_user_id    | integer      | Khóa ngoại tham chiếu đến người dùng được theo dõi (users.id) |
+| created_at          | timestamp    | Thời điểm theo dõi                         |
 
-## 6. Bình luận và phản hồi
-- **Lý do:** Tính năng này tạo không gian cho người dùng thảo luận và làm rõ thêm về câu hỏi hoặc câu trả lời, tăng cường sự tương tác.
+## 4. Bảng `comments`
+- **Mục đích:** Lưu trữ bình luận cho các bài viết.
 
-## 7. Hệ thống Đánh giá và Thưởng
-- **Lý do:** Khuyến khích người dùng đóng góp nội dung chất lượng thông qua việc cho điểm và công nhận những câu trả lời xuất sắc.
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| id           | integer      | Khóa chính, tự động tăng                   |
+| post_id      | integer      | Khóa ngoại tham chiếu đến bài viết (posts.id) |
+| user_id      | integer      | Khóa ngoại tham chiếu đến người dùng (users.id) |
+| body         | text         | Nội dung bình luận                         |
+| created_at   | timestamp    | Thời điểm tạo bình luận                    |
 
-## 8. Theo dõi câu hỏi và người dùng
-- **Lý do:** Giúp người dùng nhận thông báo về cập nhật liên quan đến câu hỏi hoặc người dùng họ theo dõi, duy trì sự kết nối với cộng đồng.
+## 5. Bảng `votes`
+- **Mục đích:** Lưu trữ thông tin về đánh giá cho bài viết và bình luận.
 
-## 9. Hệ thống Thẻ (Tags)
-- **Lý do:** Giúp phân loại câu hỏi theo chủ đề, tạo điều kiện cho người dùng tìm kiếm và theo dõi các lĩnh vực quan tâm.
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| id           | integer      | Khóa chính, tự động tăng                   |
+| user_id      | integer      | Khóa ngoại tham chiếu đến người dùng (users.id) |
+| post_id      | integer      | Khóa ngoại tham chiếu đến bài viết (posts.id, nullable) |
+| comment_id   | integer      | Khóa ngoại tham chiếu đến bình luận (comments.id, nullable) |
+| vote_type    | varchar      | Loại đánh giá (upvote, downvote)          |
+| created_at   | timestamp    | Thời điểm tạo đánh giá                     |
 
-## 10. Chuyên mục và Nội dung nổi bật
-- **Lý do:** Cung cấp danh sách câu hỏi nổi bật, giúp người dùng nhanh chóng khám phá nội dung hữu ích và được nhiều người quan tâm.
+## 6. Bảng `tags`
+- **Mục đích:** Lưu trữ thông tin về thẻ cho các bài viết.
 
-## 11. Hỗ trợ Đa ngôn ngữ
-- **Lý do:** Tính năng này mở rộng khả năng tiếp cận cho người dùng từ các quốc gia khác nhau, tạo ra một cộng đồng đa dạng và toàn cầu.
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| id           | integer      | Khóa chính, tự động tăng                   |
+| name         | varchar      | Tên thẻ                                    |
+| created_at   | timestamp    | Thời điểm tạo thẻ                          |
 
-## 12. Chính sách Cộng đồng và Báo cáo
-- **Lý do:** Thiết lập quy tắc ứng xử và cho phép người dùng báo cáo hành vi không phù hợp, duy trì một môi trường tích cực và an toàn.
+## 7. Bảng `post_tags`
+- **Mục đích:** Liên kết giữa bài viết và thẻ (many-to-many).
 
-## 13. Hệ thống Thông báo
-- **Lý do:** Cung cấp thông báo cho người dùng về các hoạt động như bình luận mới, câu hỏi được trả lời, hoặc câu hỏi họ theo dõi có cập nhật.
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| post_id      | integer      | Khóa ngoại tham chiếu đến bài viết (posts.id) |
+| tag_id       | integer      | Khóa ngoại tham chiếu đến thẻ (tags.id)  |
 
-## 14. Quản lý Người dùng
-- **Lý do:** Cho phép người dùng chỉnh sửa thông tin cá nhân, mật khẩu và cài đặt tài khoản, đảm bảo tính bảo mật và cá nhân hóa.
+## 8. Bảng `notifications`
+- **Mục đích:** Lưu trữ thông báo cho người dùng.
 
-# Hướng Triển Khai cho Trang Web Mạng Xã Hội
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| id           | integer      | Khóa chính, tự động tăng                   |
+| user_id      | integer      | Khóa ngoại tham chiếu đến người dùng (users.id) |
+| message      | varchar      | Nội dung thông báo                        |
+| read_status  | boolean      | Trạng thái đã đọc (true, false)          |
+| created_at   | timestamp    | Thời điểm tạo thông báo                    |
 
-## 1. Hệ thống Đăng ký và Đăng nhập
-### Frontend
-- Tạo trang đăng ký và đăng nhập với các trường nhập liệu cho email và mật khẩu.
-- Hiển thị thông báo lỗi khi người dùng nhập thông tin không hợp lệ.
+## 9. Bảng `user_settings`
+- **Mục đích:** Lưu trữ cài đặt của người dùng.
 
-### Backend
-- Xây dựng mô hình người dùng với Spring Data JPA.
-- Sử dụng Spring Security để xử lý xác thực và quản lý người dùng.
-- Cung cấp API cho đăng ký và đăng nhập.
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| user_id      | integer      | Khóa ngoại tham chiếu đến người dùng (users.id) |
+| setting_key   | varchar      | Tên cài đặt                                 |
+| setting_value | varchar      | Giá trị cài đặt                            |
 
-## 2. Giao diện người dùng thân thiện
-### Frontend
-- Thiết kế giao diện dễ sử dụng bằng HTML, CSS, và JavaScript.
-- Sử dụng framework như Bootstrap hoặc Tailwind CSS để tạo giao diện responsive.
+## 10. Bảng `reports`
+- **Mục đích:** Lưu trữ thông tin về các báo cáo vi phạm.
 
-### Backend
-- Tạo các controller và view trong Spring MVC để phục vụ các trang khác nhau (home, question, profile).
-- Quản lý dữ liệu từ backend để hiển thị trên frontend.
+| Tên cột      | Kiểu dữ liệu | Mô tả                                       |
+|--------------|--------------|---------------------------------------------|
+| id           | integer      | Khóa chính, tự động tăng                   |
+| user_id      | integer      | Khóa ngoại tham chiếu đến người dùng (users.id) |
+| post_id      | integer      | Khóa ngoại tham chiếu đến bài viết (posts.id, nullable) |
+| comment_id   | integer      | Khóa ngoại tham chiếu đến bình luận (comments.id, nullable) |
+| reason       | text         | Lý do báo cáo                              |
+| created_at   | timestamp    | Thời điểm tạo báo cáo                     |
 
-## 3. Chức năng Tìm kiếm mạnh mẽ
-### Frontend
-- Tạo thanh tìm kiếm cho phép người dùng nhập từ khóa.
-- Hiển thị kết quả tìm kiếm ngay trên trang.
+# Mối Quan Hệ Giữa Các Bảng
+- **Giữa `users`, `posts`, `comments`, `votes`, và `follows`:**
+  - Một người dùng có thể có nhiều bài viết và bình luận.
+  - Một bài viết có thể có nhiều bình luận.
+  - Một người dùng có thể theo dõi nhiều người dùng khác.
+  - Một người dùng có thể đánh giá nhiều bài viết và bình luận.
 
-### Backend
-- Tạo API tìm kiếm cho phép truy vấn cơ sở dữ liệu sử dụng Spring Data JPA.
-- Sử dụng các phương thức lọc để tìm câu hỏi và câu trả lời theo từ khóa.
+- **Giữa `posts` và `tags`:**
+  - Một bài viết có thể có nhiều thẻ (many-to-many).
+  - Một thẻ có thể liên kết với nhiều bài viết.
 
-## 4. Tính năng Đặt câu hỏi
-### Frontend
-- Tạo form cho phép người dùng nhập câu hỏi mới.
-- Hiển thị danh sách câu hỏi hiện có.
+- **Giữa `users` và `notifications`:**
+  - Một người dùng có thể có nhiều thông báo.
 
-### Backend
-- Xây dựng mô hình câu hỏi và liên kết với người dùng.
-- Tạo API để thêm và lấy câu hỏi từ cơ sở dữ liệu.
+- **Giữa `users` và `user_settings`:**
+  - Một người dùng có thể có nhiều cài đặt.
 
-## 5. Chức năng Trả lời câu hỏi
-### Frontend
-- Tạo form cho phép người dùng trả lời câu hỏi.
-- Hiển thị danh sách các câu trả lời liên quan.
+- **Giữa `reports`, `users`, `posts`, và `comments`:**
+  - Một báo cáo có thể liên quan đến một người dùng, một bài viết hoặc một bình luận.
 
-### Backend
-- Xây dựng mô hình câu trả lời và liên kết với câu hỏi và người dùng.
-- Cung cấp API để thêm và lấy câu trả lời.
 
-## 6. Bình luận và phản hồi
-### Frontend
-- Tạo form bình luận cho câu hỏi và câu trả lời.
-- Hiển thị danh sách bình luận.
+# Thiết Kế Cơ Sở Dữ Liệu cho Trang Web Mạng Xã Hội
 
-### Backend
-- Xây dựng mô hình bình luận và liên kết với câu hỏi/câu trả lời.
-- Cung cấp API cho bình luận.
+Table users {
 
-## 7. Hệ thống Đánh giá và Thưởng
-### Frontend
-- Cho phép người dùng cho điểm câu hỏi và câu trả lời.
-- Hiển thị số điểm và trạng thái của câu hỏi/câu trả lời.
+  id integer [primary key]
 
-### Backend
-- Xây dựng hệ thống đánh giá và liên kết với câu hỏi/câu trả lời.
-- Cập nhật điểm số trong cơ sở dữ liệu.
+  username varchar
 
-## 8. Theo dõi câu hỏi và người dùng
-### Frontend
-- Tạo giao diện cho phép người dùng theo dõi câu hỏi và người dùng khác.
-- Hiển thị danh sách câu hỏi theo dõi.
+  email varchar
 
-### Backend
-- Tạo mô hình theo dõi và liên kết với người dùng và câu hỏi.
-- Cung cấp API cho tính năng theo dõi.
+  password_hash varchar
 
-## 9. Hệ thống Thẻ (Tags)
-### Frontend
-- Cho phép người dùng thêm thẻ cho câu hỏi.
-- Hiển thị thẻ liên quan đến câu hỏi.
+  role varchar
 
-### Backend
-- Xây dựng mô hình thẻ và liên kết với câu hỏi.
-- Cung cấp API để quản lý thẻ.
+  created_at timestamp
 
-## 10. Chuyên mục và Nội dung nổi bật
-### Frontend
-- Hiển thị danh sách câu hỏi nổi bật trên trang chính.
-- Tạo các chuyên mục cho câu hỏi.
+}
 
-### Backend
-- Cập nhật và duy trì danh sách câu hỏi nổi bật trong cơ sở dữ liệu.
-- Cung cấp API để lấy danh sách câu hỏi nổi bật.
 
-## 11. Hỗ trợ Đa ngôn ngữ
-### Frontend
-- Sử dụng thư viện cho phép chuyển đổi ngôn ngữ giao diện.
-- Cho phép người dùng chọn ngôn ngữ từ giao diện.
+Table posts {
 
-### Backend
-- Cấu hình Spring Boot để hỗ trợ đa ngôn ngữ (i18n).
-- Cung cấp nội dung dịch sẵn cho các ngôn ngữ khác nhau.
+  id integer [primary key]
+  
+  title varchar
+  
+  body text [note: 'Content of the post']
+  
+  user_id integer
+  
+  status varchar
+  
+  created_at timestamp
 
-## 12. Chính sách Cộng đồng và Báo cáo
-### Frontend
-- Tạo giao diện cho phép người dùng báo cáo câu hỏi/câu trả lời không phù hợp.
-- Hiển thị chính sách cộng đồng.
+}
 
-### Backend
-- Xây dựng mô hình báo cáo và lưu trữ thông tin.
-- Cung cấp API cho tính năng báo cáo.
+Table follows {
 
-## 13. Hệ thống Thông báo
-### Frontend
-- Tạo biểu tượng thông báo trên giao diện.
-- Hiển thị thông báo cho người dùng khi có cập nhật.
+  following_user_id integer
+  
+  followed_user_id integer
+  
+  created_at timestamp 
 
-### Backend
-- Tạo mô hình thông báo và lưu trữ thông tin.
-- Cung cấp API để lấy và cập nhật thông báo.
+}
 
-## 14. Quản lý Người dùng
-### Frontend
-- Tạo giao diện cho người dùng chỉnh sửa thông tin cá nhân.
-- Hiển thị thông tin cá nhân của người dùng.
+Table comments {
 
-### Backend
-- Cung cấp API cho phép người dùng cập nhật thông tin cá nhân.
-- Xử lý xác thực và bảo mật thông tin người dùng.
+  id integer [primary key]
+  
+  post_id integer
+  
+  user_id integer
+  
+  body text
+  
+  created_at timestamp
 
+}
+
+Table votes {
+
+  id integer [primary key]
+  
+  user_id integer
+  
+  post_id integer
+  
+  comment_id integer 
+  
+  vote_type varchar
+  
+  created_at timestamp
+
+}
+
+Table tags {
+
+  id integer [primary key]
+  
+  name varchar
+  
+  created_at timestamp
+
+}
+
+Table post_tags {
+
+  post_id integer
+  
+  tag_id integer
+
+}
+
+Table notifications {
+
+  id integer [primary key]
+  
+  user_id integer
+  
+  message varchar
+  
+  read_status boolean
+  
+  created_at timestamp
+
+}
+
+
+Table user_settings {
+
+  user_id integer
+  
+  setting_key varchar
+  
+  setting_value varchar
+
+}
+
+Table reports {
+
+  id integer [primary key]
+  
+  user_id integer
+  
+  post_id integer 
+  
+  comment_id integer 
+  
+  reason text
+  
+  created_at timestamp
+
+}
+
+# Relationships
+
+Ref: posts.user_id > users.id
+
+Ref: follows.following_user_id < users.id 
+
+Ref: follows.followed_user_id < users.id 
+
+Ref: comments.post_id > posts.id 
+
+Ref: comments.user_id > users.id 
+
+Ref: votes.user_id > users.id 
+
+Ref: votes.post_id > posts.id 
+
+Ref: votes.comment_id > comments.id 
+
+Ref: post_tags.post_id > posts.id 
+
+Ref: post_tags.tag_id > tags.id 
+
+Ref: notifications.user_id > users.id 
+
+Ref: user_settings.user_id > users.id 
+
+Ref: reports.user_id > users.id 
+
+Ref: reports.post_id > posts.id 
+
+Ref: reports.comment_id > comments.id 
 
