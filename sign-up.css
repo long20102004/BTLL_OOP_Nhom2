@@ -1,0 +1,163 @@
+/* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+  }
+  
+  .container {
+    max-width: 600px; /* mở rộng hơn so với ban đầu */
+    width: 100%;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    text-align: center;
+  }
+  
+  .header .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+  
+  .header h2 {
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  
+  .header p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 25px;
+  }
+  
+  .social-login {
+    margin-bottom: 20px;
+  }
+  
+  .social-btn {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #444;
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    text-align: center; /* Căn chữ ở giữa */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .social-btn img {
+    position: absolute;
+    left: 15px; /* Đẩy icon sang trái */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+  }
+  
+  .google-btn:hover,
+  .facebook-btn:hover {
+    background-color: #f1f1f1;
+    border-color: #e0e0e0;
+  }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    color: #999;
+  }
+  
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: #ddd;
+  }
+  
+  .divider span {
+    padding: 0 10px;
+    font-size: 14px;
+  }
+  
+  .signup-form label {
+    display: block;
+    text-align: left;
+    margin: 8px 0 5px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .signup-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-form input:focus {
+    outline: none;
+    background-color: #ffffff;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+  }
+  
+  .signup-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .footer a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer a:hover {
+    color: #0056b3;
+  }
+  
