@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEV Community Login</title>
+    <style>
+        /* Đặt nền và căn giữa nội dung */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+
+        /* Khung chứa form đăng nhập */
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .login-google {
+            background-color: white;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .login-github {
+            background-color: #333;
+            color: white;
+            border: 1px solid #333;
+        }
+
+        /* Kích thước ảnh */
+        .login-google img {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+        }
+
+        .login-github img {
+            width: 35px; /* Tăng kích thước ảnh của GitHub */
+            height: 35px;
+            margin-right: 15px;
+        }
+
+        /* Hiệu ứng bóng khi rê chuột */
+        .login-button:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .separator {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        form {
+            width: 100%;
+            text-align: left;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .signup a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup a:hover, .forgot-password a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Join the DEV Community</h1>
+        <p>DEV Community is a community of 2,158,913 amazing developers</p>
+        
+        <!-- Nút đăng nhập Google -->
+        <button class="login-button login-google">
+            <img src="Google_Logo.png" alt="Google Logo">
+            Continue with Google
+        </button>
+        
+        <!-- Nút đăng nhập GitHub -->
+        <button class="login-button login-github">
+            <img src="github.png" alt="GitHub Logo">
+            Continue with GitHub
+        </button>
+
+        <div class="separator">or</div>
+
+        <form>
+            <input type="email" placeholder="Enter your email" required>
+            <input type="password" placeholder="Enter your password" required>
+            
+            <label>
+                <input type="checkbox"> Remember me
+            </label>
+            
+            <button type="submit">Log in</button>
+        </form>
+
+        <div class="forgot-password">
+            <a href="#">Forgot password?</a>
+        </div>
+
+        <div class="signup">
+            New to DEV Community? <a href="#">Create account</a>.
+        </div>
+    </div>
+
+</body>
+</html>
