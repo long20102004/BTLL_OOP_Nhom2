@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat UI</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/NavBar.css">
+</head>
+
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <ul class="menu">
+            <li><button class="tab-button">Top1Fifai</button></li>
+            <li><button class="tab-button">Relevant</button></li>
+            <li><button class="tab-button">Latest</button></li>
+            <li><button class="tab-button">Top</button></li>
+        </ul>
+        <div class="search">
+            <input type="text" placeholder="Search for something" class="search-input" />
+        </div>
+        <button class="create-post">Create post</button>
+        <div class="profile-im">
+            <img src="imgs/profileImg.png" alt="Profile" class="profile-img" />
+        </div>
+    </nav>
+    <div class="container">
+        <div class="sidebar">
+            <input type="text" placeholder="Search for chat">
+            <ul class="chat-list">
+                <li class="active">
+                    <img src="imgs/avatar.png" alt="Avatar">
+                    <div>
+                        <div class="name">Williams Hehe</div>
+                        <div class="message-preview">Oh no</div>
+                    </div>
+                </li>
+                <li>
+                    <img src="imgs/avatar2.png" alt="Avatar">
+                    <div>
+                        <div class="name">Bill Gates</div>
+                        <div class="message-preview">10d</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="chat-area">
+            <div class="chat-header">
+                <img src="imgs/avatar.png" alt="Avatar">
+                <div class="name">Williams Hehe</div>
+            </div>
+            <div class="chat-detail">
+                <div class="chat-message">
+                    <img src="imgs/avatar.png" alt="Avatar">
+                    <div class="text">Hello</div>
+                </div>
+                
+                <!-- Tin nhắn của bản thân -->
+                <div class="chat-message self">
+                    <div class="text">Hi there!</div>
+                    <img src="imgs/profileImg.png" alt="Your Avatar">
+                </div>
+            </div>
+            <div class="message-input">
+                <input type="text" placeholder="Aa">
+                <button>😊</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
