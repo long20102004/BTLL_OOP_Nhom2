@@ -1,0 +1,280 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Inter, sans-serif;
+    background-color: white;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-container {
+    background-color: white;
+    border-radius: 10px;
+    width: 50vw;
+    max-width: 100%;
+    text-align: center;
+    margin: 20px;
+}    
+
+#l_title {
+    font-size: 22px;
+    color: white;
+    background-color: #050C9C;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.login-container h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 25px;
+}
+
+.login-container p {
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.social-login button {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #050C9C;
+    background-color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-login button img {
+    width: 20px;
+}
+
+.social-login button:hover {
+    background-color: #A7E6FF;
+}
+
+.or-divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.or-divider::before, .or-divider::after {
+    content: '';
+    flex: 1; /* Tự động chiếm không gian */
+    height: 1px; /* Độ dày của đường kẻ */
+    background-color: gray; /* Màu sắc của đường kẻ */
+    margin: 0 10px; /* Khoảng cách giữa đường kẻ và chữ "or" */
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+#lEmail, #lPassword {
+    font-size: 15px;
+    font-weight: bold;
+    float: left;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.remember-me label {
+    font-size: 14px;
+    color: #555;
+}
+
+.remember-me input {
+    margin-right: 10px;
+}
+
+.forgot-password {
+    color: #0073e6;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #050c9c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #005bb5;
+}
+
+.create-account {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.create-account a {
+    color: #0073e6;
+    text-decoration: none;
+}
+
+.create-account a:hover {
+    text-decoration: underline;
+}
+
+.signup-container{
+  background-color: white;
+  border-radius: 10px;
+  padding-top: 45px;
+  /* padding-bottom: 10px; */
+  width: 50vw; 
+  max-width: 100%;
+  text-align: center;
+  margin: 20px; /* Để có khoảng trống trên và dưới khi lướt */
+}    
+
+#l_title {
+  font-size: 22px;
+  color: white;
+  background-color: #050C9C;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.signup-container h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  margin-top: 25px;
+}
+
+.signup-container p {
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.social_sign_up {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.social_sign_up button {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #050C9C;
+  background-color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.social_sign_up button img {
+  width: 20px;
+}
+
+.social_sign_up button:hover {
+  background-color: #A7E6FF;
+}
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.or-divider::before, .or-divider::after {
+  content: '';
+  flex: 1; /* Tự động chiếm không gian */
+  height: 1px; /* Độ dày của đường kẻ */
+  background-color: gray; /* Màu sắc của đường kẻ */
+  margin: 0 10px; /* Khoảng cách giữa đường kẻ và chữ "or" */
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+#lEmail, #lPassword, #lConfirm {
+  font-size: 15px;
+  font-weight: bold;
+  float: left;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #050c9c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.signup-button:hover {
+  background-color: #005bb5;
+}
+
+.create-account {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.create-account a {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.create-account a:hover {
+  text-decoration: underline;
+}

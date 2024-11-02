@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -18,31 +19,41 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private JwtTokenFilter jwtTokenFilter;
+//    private JwtTokenFilter jwtTokenFilter;
     private UserService userService;
-    private JwtToUserConvertor convertor;
     @Autowired
     private JwtUtility jwtUtility;
 
     @Autowired
-    public SecurityConfig(JwtTokenFilter jwtTokenFilter, UserService userService, JwtToUserConvertor convertor) {
-        this.jwtTokenFilter = jwtTokenFilter;
+    public SecurityConfig(UserService userService) {
         this.userService = userService;
-        this.convertor = convertor;
     }
 
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userService);
+        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        return provider;
+    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.exceptionHandling(exceptionHandling -> {
@@ -50,21 +61,22 @@ public class SecurityConfig {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
             });
         });
-//        httpSecurity.authorizeHttpRequests(request ->
-//                        request.requestMatchers("/", "oauth2/**", "/login/**", "/register", "/courses/**", "/valid", "/course/**", "/lessons/**").permitAll()
-//                        .requestMatchers("/edit/**").hasRole("ADMIN")
-//                        .anyRequest().authenticated()).
-//                sessionManagement(sessionManagement ->
-//                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authenticationProvider(authenticationProvider())
-//                .addFilterBefore(
-//                        jwtTokenFilter, UsernamePasswordAuthenticationFilter.class
-//                ).oauth2Login((oauth2Login) -> {
-//                    oauth2Login.successHandler(successHandler())
-//                            .failureUrl("/fail")
-//                    ;
-//                }).cors(Customizer.withDefaults());
+        httpSecurity.authorizeHttpRequests(request ->
+                        request.requestMatchers("/", "oauth2/**", "/login/**", "/register", "/valid", "/imgs/**", "/styles/**", "/post-login", "/js/**").permitAll()
+                                .requestMatchers("/edit/**").hasRole("ADMIN")
+                                .requestMatchers("/profile").hasRole("USER")
+                                .anyRequest().authenticated()).
+                sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .authenticationProvider(authenticationProvider())
+                .oauth2Login((oauth2Login) -> {
+                    oauth2Login.successHandler(successHandler())
+                            .failureUrl("/fail")
+                    ;
+                }).cors(Customizer.withDefaults());
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
+
+        httpSecurity.anonymous().disable();
         return httpSecurity.build();
     }
 
@@ -80,13 +92,33 @@ public class SecurityConfig {
                 if (user == null) {
                     user = new User();
                     user.setUsername(id);
+                    user.setEmail(id);
+                    user.setPassword("password");
+                    user.setRole("USER");
                     userService.saveUser(user);
                 }
-                String token = jwtUtility.generateToken(user);
-                response.setContentType("application/json");
+//                String token = jwtUtility.generateToken(user);
+//                request.setAttribute("token", token);
+
+                User userDetails = userService.findUserByUsername(id);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities()
+                );
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+
+
+
+                getRedirectStrategy().sendRedirect(request, response, "/profile");
+
+
+                response.setContentType("text/html");
                 response.setCharacterEncoding("UTF-8");
-                response.getWriter().write("{\"token\":\"" + token + "\"}");
-                getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/login?token=" + token);
+//                response.setContentType("application/json");
+//                response.setCharacterEncoding("UTF-8");
+//                response.getWriter().write("{\"token\":\"" + token + "\"}");
+//                getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/login?token=" + token);
             }
 
             @Override
@@ -96,13 +128,6 @@ public class SecurityConfig {
         };
     }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
-        return provider;
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

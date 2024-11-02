@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Id
     String username;
 
-    @Column(name = "password")
+    @Column(name = "password_hash")
     String password;
 
     @Column(name = "email")
@@ -35,38 +35,38 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     Long createdAt;
 
-    @OneToMany(mappedBy = "userVote", cascade = CascadeType.ALL)
-    List<VoteEntity> votesUser;
-
-    @OneToMany(mappedBy = "userPost", cascade = CascadeType.ALL)
-    List<PostEntity> postsUser;
-
-    @OneToMany(mappedBy = "userComment", cascade = CascadeType.ALL)
-    List<CommentEntity> commentsUser;
-
-    @OneToMany(mappedBy = "followingUser", cascade = CascadeType.ALL)
-    List<FollowEntity> followingUser;
-
-    @OneToMany(mappedBy = "followedUser", cascade = CascadeType.ALL)
-    List<FollowEntity> followedUser;
-
-    @OneToMany(mappedBy = "userSetting", cascade = CascadeType.ALL)
-    List<UserSettingEntity> settingsUser;
-
-    @OneToMany(mappedBy = "userReport", cascade = CascadeType.ALL)
-    List<ReportEntity> reportsUser;
-
-    @OneToMany(mappedBy = "userNotification", cascade = CascadeType.ALL)
-    List<NotificationEntity> notificationsUser;
-
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-    List<MessageEntity> messagesSent;
-
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    List<MessageEntity> messagesReceived;
-
-    @OneToMany(mappedBy = "userReply", cascade = CascadeType.ALL)
-    List<ReplyEntity> repliesUser;
+//    @OneToMany(mappedBy = "userVote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<VoteEntity> votesUser;
+//
+//    @OneToMany(mappedBy = "userPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<PostEntity> postsUser;
+//
+//    @OneToMany(mappedBy = "userComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<CommentEntity> commentsUser;
+//
+//    @OneToMany(mappedBy = "followingUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<FollowEntity> followingUser;
+//
+//    @OneToMany(mappedBy = "followedUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<FollowEntity> followedUser;
+//
+//    @OneToMany(mappedBy = "userSetting", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<UserSettingEntity> settingsUser;
+//
+//    @OneToMany(mappedBy = "userReport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<ReportEntity> reportsUser;
+//
+//    @OneToMany(mappedBy = "userNotification", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<NotificationEntity> notificationsUser;
+//
+//    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<MessageEntity> messagesSent;
+//
+//    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<MessageEntity> messagesReceived;
+//
+//    @OneToMany(mappedBy = "userReply", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    List<ReplyEntity> repliesUser;
 
     @Column(name = "role")
 

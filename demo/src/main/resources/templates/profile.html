@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
   <!-- CSS Files -->
-  <link rel="stylesheet" href="/styles/styles.css" />
+  <link rel="stylesheet" href="/styles/Profile.css" />
   <link rel="stylesheet" href="/styles/ProfileCard.css" />
   <link rel="stylesheet" href="/styles/PostCard.css" />
   <link rel="stylesheet" href="/styles/NavBar.css" />
@@ -49,8 +49,8 @@
             <img src="/imgs/profileImg.png" alt="Profile" class="profile-image" />
             <div class="profile-body">
             <div class="profile-header">
-                <h2>Vân Đoàn</h2>
-                <p>Bio not found</p>
+                <h2 th:text="${user.getUsername()}"></h2>
+                <p>Hello</p>
             </div>
             <hr />
             <div class="profile-stats">
