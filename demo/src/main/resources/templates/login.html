@@ -17,14 +17,18 @@
         <p>DEV Community is a community of 2,158,913 amazing developers</p>
 
         <div class="social-login">
-            <button class="google-button">
-                <img src="/imgs/google.png" alt="Google Logo">
-                Continue with Google
-            </button>
-            <button class="facebook-button">
-                <img src="/imgs/fb.png" alt="Facebook Logo">
-                Continue with Facebook
-            </button>
+            <a href="http://localhost:8080/oauth2/authorization/google">
+                <button class="google-button">
+                    <img src="/imgs/google.png" alt="Google Logo">
+                    Continue with Google
+                </button>
+            </a>
+            <a href="http://localhost:8080/oauth2/authorization/facebook">
+                <button class="facebook-button">
+                    <img src="/imgs/fb.png" alt="Facebook Logo">
+                    Continue with Facebook
+                </button>
+            </a>
         </div>
 
         <div class="or-divider">or</div>
@@ -50,6 +54,5 @@
             New to DEV Community? <a href="#">Create account</a>.
         </div>
     </div>
-    <script src="/js/login.js"></script>
 </body>
 </html>

@@ -62,7 +62,7 @@ public class SecurityConfig {
             });
         });
         httpSecurity.authorizeHttpRequests(request ->
-                        request.requestMatchers("/", "oauth2/**", "/login/**", "/register", "/valid", "/imgs/**", "/styles/**", "/post-login", "/js/**").permitAll()
+                        request.requestMatchers("/", "oauth2/**", "/login/**", "/register", "/valid", "/imgs/**", "/styles/**", "/post-login", "/js/**", "/chat").permitAll()
                                 .requestMatchers("/edit/**").hasRole("ADMIN")
                                 .requestMatchers("/profile").hasRole("USER")
                                 .anyRequest().authenticated()).

@@ -28,8 +28,10 @@ public class MessageEntity {
     User receiver;
 
     @Column(name = "content")
-    byte[] content;
+    String content;
 
     @Column(name = "time_send")
     Timestamp timeSend;
+    @Column(name = "message_type")
+    private String type;
 }
