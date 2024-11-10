@@ -1,0 +1,301 @@
+/* thanh trên cùng */
+.header {
+    display: flex;
+    justify-content: space-between;
+
+    align-items: center;
+    background-color: #A7E6FF;
+    height: 3em;
+    width: 197.8vh;
+
+    padding-left: 30px;
+    padding-right: 30px;
+
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.item {
+    color: #050C90;
+}
+
+
+.item1 {
+    
+    color: #8BA3CB;
+    font-weight: 300;
+    right: 15px;
+    position: relative;
+}
+
+.item2 {
+    color: #3572EF;
+}
+
+.login {
+    background-color: #E6EFF5;
+    padding: 8px;
+    border-radius: 7px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border: 2px solid #CAC4D0;
+}
+
+.createacc {
+    background-color: #E6EFF5;
+    padding: 8px;
+    border-radius: 7px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 2px solid #CAC4D0;
+}
+
+.search {
+    border-radius: 20px;
+    background-color: aliceblue;
+    padding: 15px;
+    padding-left: 70px;
+    padding-right: 70px;
+    font-size: small;
+    position: relative;
+}
+
+.search img {
+    position: absolute;
+    left: 20px;
+    top: 13px;
+}
+
+/* thân bài */
+body {
+    background-color: #F5F7FA;
+    font-family: "Inter", sans-serif;
+}
+.board {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1.2fr 4fr 1.5fr;
+    gap: 1rem;
+}
+
+/* Thanh tùy chọn */
+.sidebar {
+    background-color: white;
+}
+
+.menu-post {
+    background-color:white;
+    position: relative;
+    top: 1em;
+    border-radius: 20px;
+    display: flex;
+}
+
+.menu-discuss {
+    background-color:white;
+    position: relative;
+    top: 1em;
+    border-radius: 20px;
+}
+
+.sidebar ul {
+    font-weight: 600;
+    font-size: 20px;
+    color: #B1B1B1;
+    font-weight: 500;
+
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    margin-top: 30px;  
+    margin-left: 50px;
+}
+
+.sidebar img {
+    color: #B1B1B1;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 55px;
+    margin-top: -1px;
+}
+
+/* Thanh thảo luận tích cực */
+.menu-discuss .title {
+    font-weight: 600;
+    font-size: 25px;
+    margin: 10px;
+    margin-left: 60px;
+    color: #343C6A;
+}
+
+.content {
+    font-weight: 300;
+    font-style: italic;
+    margin-left: 15px;
+}
+
+.cmt {
+    font-weight: 200;
+    font-style: italic;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+/* bài post */
+.menu-post {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1rem;
+    background-color: #F5F7FA;
+}
+
+.post1 {
+    background-color: white;
+    height: 380px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.post1 img {
+    width: 49px;
+    height: 50.77px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.post1-status {
+    display: flex;
+}
+
+.user {
+    margin-left: 10px;
+    margin-top: 25px; 
+}
+
+.username {
+    font-weight: 600;
+}
+
+.timestamp {
+    font-weight: 300;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.user p {
+    margin-top: 10px;
+    font-size: 40px;
+    font-weight: 760;
+}
+
+.hashtags {
+    display: flex;
+    gap: 1rem;
+    margin-top: -30px;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.reaction {
+    display: flex;
+    gap: 2rem;
+    font-size: 17px;
+    margin-top: 20px;
+    margin-left: -20px;
+    font-weight: 550;
+}
+
+.reaction img {
+    width: 25px;
+    height: 25px;
+    margin-bottom: -7px;
+    margin-right: 2px;
+}
+
+.post1-react {
+    margin-left: 75px;
+}
+
+.tick {
+    padding-left: 340px;
+}
+
+
+hr {
+    display: block; 
+    height: 1px; 
+    border: none; 
+    background-color: #B1B1B1; 
+    margin: 10px 0; 
+}
+
+/* bìn lận */
+.post1-comment {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.post1-comment img {
+    margin-top: -1.5px;
+}
+
+.post1-comment-content {
+    width: 280px;
+    height: 108px;
+    background-color: #EEF8FF;
+    border-radius: 20px;
+}
+
+.post1-comment-content-hang1 {
+    display: flex;
+    gap: 10px;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.p1-timestamp {
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.p1-cmt {
+    margin-left: 15px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.p1-react {
+    display: flex;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.p1-react img {
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    margin-bottom: -4px;
+    margin-right: 2px;
+}
+
+.p1-star {
+    margin-left: 30px;
+}
+
+
+
+
+
+
+
+

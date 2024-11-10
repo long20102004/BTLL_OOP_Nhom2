@@ -1,3 +1,4 @@
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #F3F3F3;
@@ -7,9 +8,6 @@ body {
 .container {
     display: flex;
     height: 86vh;
-}
-.chat-container{
-    width: 65%;
 }
 
 .sidebar {
@@ -54,6 +52,10 @@ body {
     border-radius: 50%;
     margin-right: 10px;
 }
+.image{
+    width: 100px;
+    height: 70px;
+}
 .chat-list .name {
     font-weight: bold;
 }
@@ -69,12 +71,7 @@ body {
     flex-direction: column;
     margin-top: 15px;
     border-radius: 20px;
-    height: 100%;
-    width: 100%;
-
-}
-#messages::-webkit-scrollbar{
-    display: none;
+    height: 100%; 
 }
 
 .chat-header {
@@ -104,19 +101,15 @@ body {
     flex-direction: column;
 }
 .chat-message {
-    display: flex;
+    display: block;
     align-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
 }
 .chat-message img {
     width: 30px;
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
-}
-#messages{
-    flex: 1;
-    overflow-y: auto;
 }
 .chat-message .text {
     padding: 10px;
@@ -128,7 +121,6 @@ body {
 .chat-message.self {
     justify-content: flex-end;
     text-align: right;
-    margin-right: 10px;
 }
 
 .chat-message.self img {
@@ -164,15 +156,4 @@ body {
     font-size: 24px;
     cursor: pointer;
     margin-left: 10px;
-}
-.invisible{
-    display: none;
-}
-.avatar{
-    width: 2rem;
-    height: 2rem;
-    padding-right: 5px;
-}
-ul{
-    list-style-type: none;
 }
