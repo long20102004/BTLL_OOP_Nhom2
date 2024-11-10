@@ -17,7 +17,12 @@ public class HomeController {
     @GetMapping("/")
     public ModelAndView homePage(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+        if (SecurityContextHolder.getContext().getAuthentication() == null){
+            modelAndView.setViewName("login");
+        }
+        else{
+            modelAndView.setViewName("index");
+        }
         return modelAndView;
     }
     @GetMapping("/post-login")

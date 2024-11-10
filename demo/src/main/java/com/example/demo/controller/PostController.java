@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.PostEntity;
 import com.example.demo.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -71,9 +71,23 @@ body {
     flex-direction: column;
     margin-top: 15px;
     border-radius: 20px;
-    height: 100%; 
-}
+    height: 100%;
+    width: 100%;
 
+}
+#messages{
+    overflow-y: auto;
+    width: 100%
+}
+#messages::-webkit-scrollbar{
+    display: none;
+}
+.invisible{
+    display: none;
+}
+.chat-container{
+    width: 65%;
+}
 .chat-header {
     display: flex;
     align-items: center;
@@ -100,10 +114,14 @@ body {
     display: flex;
     flex-direction: column;
 }
+ul{
+    list-style: none;
+}
 .chat-message {
-    display: block;
+    display: flex;
     align-items: center;
     margin-bottom: 10px;
+    width: 90%;
 }
 .chat-message img {
     width: 30px;

@@ -45,8 +45,8 @@ public class User implements UserDetails {
 //    @OneToMany(mappedBy = "userVote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    List<VoteEntity> votesUser;
 //
-//    @OneToMany(mappedBy = "userPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<PostEntity> postsUser;
+    @OneToMany(mappedBy = "userPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<PostEntity> postsUser;
 //
 //    @OneToMany(mappedBy = "userComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    List<CommentEntity> commentsUser;
