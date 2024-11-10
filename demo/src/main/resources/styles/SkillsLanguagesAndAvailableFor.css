@@ -1,0 +1,12 @@
+/* SkillsLanguagesAndAvailableFor.css */
+.section {
+    padding: 10px;
+    margin-left: 50px;
+    width: 65%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    flex-direction: column;
+  }
+  

@@ -24,6 +24,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "username")
     String username;
 
     @Column(name = "password_hash")
@@ -31,9 +36,11 @@ public class User implements UserDetails {
 
     @Column(name = "email")
     String email;
+    @Column(name = "display_name")
+    String displayName;
 
-    @Column(name = "created_at")
-    Long createdAt;
+//    @Column(name = "created_at")
+//    Long createdAt;
 
 //    @OneToMany(mappedBy = "userVote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    List<VoteEntity> votesUser;

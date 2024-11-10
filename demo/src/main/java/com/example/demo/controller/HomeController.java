@@ -26,7 +26,6 @@ public class HomeController {
     }
     @GetMapping("/profile")
     public ModelAndView profilePage(){
-//        System.out.println();
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName());

@@ -6,6 +6,6 @@ public class InputSanitizer {
         if (input == null) {
             return null;
         }
-        return input.replaceAll("[;]", "");
+        return input.trim();
     }
 }

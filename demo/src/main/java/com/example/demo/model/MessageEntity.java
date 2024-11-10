@@ -8,6 +8,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "messages")
 @Data
 @Builder
@@ -17,21 +19,23 @@ import lombok.experimental.FieldDefaults;
 public class MessageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")
-    User sender;
+    private User sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
-    User receiver;
+    private User receiver;
 
     @Column(name = "content")
-    String content;
+    private String content;
+    @Column(name = "image")
+    private String imgUrl;
+    @Column(name = "video")
+    private String videoUrl;
 
     @Column(name = "time_send")
-    Timestamp timeSend;
-    @Column(name = "message_type")
-    private String type;
+    private Timestamp timeSend;
 }

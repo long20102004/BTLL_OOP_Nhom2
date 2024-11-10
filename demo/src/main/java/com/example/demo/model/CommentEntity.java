@@ -18,15 +18,15 @@ import lombok.experimental.FieldDefaults;
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    PostEntity postComment;
+    private PostEntity postComment;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User userComment;
+    private User userComment;
 
     @OneToMany(mappedBy = "commentReply", cascade = CascadeType.ALL)
     List<ReplyEntity> replyComment;
