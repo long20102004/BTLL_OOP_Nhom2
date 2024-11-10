@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" >
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile Page</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="/styles/Profile.css" />
+  <link rel="stylesheet" href="/styles/ProfileCard.css" />
+  <link rel="stylesheet" href="/styles/PostCard.css" />
+  <link rel="stylesheet" href="/styles/NavBar.css" />
+  <link rel="stylesheet" href="/styles/SkillsLanguagesAndAvailableFor.css" />
+
+</head>
+<body>
+  
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <ul class="menu">
+      <li><button class="tab-button">Top1Fifai</button></li>
+      <li><button class="tab-button">Relevant</button></li>
+      <li><button class="tab-button">Latest</button></li>
+      <li><button class="tab-button">Top</button></li>
+    </ul>
+    <div class="search">
+        <label>
+            <input type="text" placeholder="Search for something" class="search-input" />
+        </label>
+    </div>
+    <button class="create-post">Create post</button>
+    <div class="profile-im">
+      <img src="/imgs/profileImg.png" alt="Profile" class="profile-img" />
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container">
+
+      <!-- Profile Card Section -->
+    <div class="card-container">
+        <div class="blue-background"></div>
+        <div class="profile-card">
+            <img src="/imgs/profileImg.png" alt="Profile" class="profile-image" />
+            <div class="profile-body">
+            <div class="profile-header">
+                <h2 th:text="${user.getDisplayName()}"></h2>
+                <p>Hello</p>
+            </div>
+            <hr />
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <img src="/imgs/posts.png" alt="Posts" class="stat-icon" />
+                    <p>0 posts published</p>
+                </div>
+                <div class="stat-item">
+                    <img src="/imgs/cmts.png" alt="Comments" class="stat-icon" />
+                    <p>0 comments written</p>
+                </div>
+                <div class="stat-item">
+                    <img src="/imgs/tags.png" alt="Tags" class="stat-icon" />
+                    <p>0 tags followed</p>
+                </div>
+            </div>
+            </div>
+            <button class="edit-button">Edit profile</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="sidebar">
+      
+            <!-- Skills/Languages Section -->
+            <div class="section">
+              <h3>Skills/Languages</h3>
+              <hr />
+              <p>Language 1</p>
+              <p>Language 2</p>
+            </div>
+      
+            <!-- Available For Section -->
+            <div class="section">
+              <h3>Available for</h3>
+              <hr />
+              <p>Freelance or full-time opportunities</p>
+            </div>
+      
+        </div>
+    
+          <!-- Post Card Section -->
+        <div class="post-card">
+            <div class="post-header">
+              <img src="/imgs/profileImg.png" alt="Post User" class="post-image" />
+              <div>
+                <h4>Username</h4>
+                <p>Date</p>
+              </div>
+            </div>
+            <p>Post content here...</p>
+            <div class="post-tags">
+              <span class="tag">Tag1</span>
+              <span class="tag">Tag2</span>
+            </div>
+            <div class="post-footer">
+              <span class="likes">0 likes</span>
+              <span class="comments">0 comments</span>
+              <img class="star" src="/imgs/star.png" alt="Favourite"/>
+              <img class="sign" src="/imgs/sign.png" alt="Sign"/>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</body>
+</html>
