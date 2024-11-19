@@ -6,8 +6,11 @@ import jakarta.persistence.*;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "messages")
 @Data
 @Builder
@@ -17,19 +20,23 @@ import lombok.experimental.FieldDefaults;
 public class MessageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")
-    User sender;
+    private User sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
-    User receiver;
+    private User receiver;
 
     @Column(name = "content")
-    byte[] content;
-
+    private String content;
+    @Column(name = "image")
+    private String imgUrl;
+    @Column(name = "video")
+    private String videoUrl;
+    @CreationTimestamp
     @Column(name = "time_send")
-    Timestamp timeSend;
+    private Timestamp timeSend;
 }

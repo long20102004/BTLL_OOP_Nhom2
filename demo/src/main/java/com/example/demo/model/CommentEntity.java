@@ -18,28 +18,22 @@ import lombok.experimental.FieldDefaults;
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    PostEntity postComment;
+    private PostEntity postComment;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User userComment;
-
-    @OneToMany(mappedBy = "commentReply", cascade = CascadeType.ALL)
-    List<ReplyEntity> replyComment;
-
-    @OneToMany(mappedBy = "commentVote", cascade = CascadeType.ALL)
-    List<VoteEntity> votes;
-
-    @OneToMany(mappedBy = "commentReport", cascade = CascadeType.ALL)
-    List<ReportEntity> reports;
-
-    @Column(name = "body")
-    byte[] body;
+    private User userComment;
 
     @Column(name = "created_at")
     Timestamp createdAt;
+    @Column(name = "content")
+    private String content;
+    @Column(name = "upvote")
+    private int upvote;
+    @Column(name = "downvote")
+    private int downVote;
 }

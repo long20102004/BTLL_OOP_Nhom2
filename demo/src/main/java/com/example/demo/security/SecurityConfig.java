@@ -37,10 +37,9 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-//    private JwtTokenFilter jwtTokenFilter;
+    //    private JwtTokenFilter jwtTokenFilter;
     private UserService userService;
-    @Autowired
-    private JwtUtility jwtUtility;
+//    private JwtUtility jwtUtility;
 
     @Autowired
     public SecurityConfig(UserService userService) {
@@ -54,15 +53,17 @@ public class SecurityConfig {
         provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
         return provider;
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.exceptionHandling(exceptionHandling -> {
-            exceptionHandling.authenticationEntryPoint((request, response, authException) -> {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
-            });
-        });
+//        httpSecurity.exceptionHandling(exceptionHandling -> {
+//            exceptionHandling.authenticationEntryPoint((request, response, authException) -> {
+//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+//            });
+//        });
+        httpSecurity.formLogin().loginPage("/");
         httpSecurity.authorizeHttpRequests(request ->
-                        request.requestMatchers("/", "oauth2/**", "/login/**", "/register", "/valid", "/imgs/**", "/styles/**", "/post-login", "/js/**").permitAll()
+                        request.requestMatchers("/", "oauth2/**", "/login/**", "/register", "/imgs/**", "/styles/**", "/post-login", "/sign-up").permitAll()
                                 .requestMatchers("/edit/**").hasRole("ADMIN")
                                 .requestMatchers("/profile").hasRole("USER")
                                 .anyRequest().authenticated()).
@@ -75,7 +76,6 @@ public class SecurityConfig {
                     ;
                 }).cors(Customizer.withDefaults());
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-
         httpSecurity.anonymous().disable();
         return httpSecurity.build();
     }
@@ -86,13 +86,21 @@ public class SecurityConfig {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                 OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-                String id = oauth2User.getAttribute("id");
-                if (id == null) id = oauth2User.getAttribute("email");
-                User user = (User) userService.loadUserByUsername(id);
+                String id = null;
+                Object idAttribute = oauth2User.getAttribute("id");
+                if (idAttribute == null) id = oauth2User.getAttribute("email");
+                else if (idAttribute instanceof Integer) {
+                    id = String.valueOf(idAttribute);
+                } else {
+                    id = (String) idAttribute;
+                }
+
+                User user = (User) userService.findUserByUsername(id);
                 if (user == null) {
                     user = new User();
                     user.setUsername(id);
                     user.setEmail(id);
+                    user.setDisplayName(oauth2User.getAttribute("name"));
                     user.setPassword("password");
                     user.setRole("USER");
                     userService.saveUser(user);
@@ -106,11 +114,9 @@ public class SecurityConfig {
                 );
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 
 
-
-                getRedirectStrategy().sendRedirect(request, response, "/profile");
+                getRedirectStrategy().sendRedirect(request, response, "/");
 
 
                 response.setContentType("text/html");

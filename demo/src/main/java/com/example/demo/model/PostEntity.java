@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
@@ -19,33 +20,32 @@ import lombok.experimental.FieldDefaults;
 public class PostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(name = "title")
-    String title;
+    private String title;
 
     @Column(name = "body")
-    byte[] body;
+    private String body;
 
     @Column(name = "status")
-    String status;
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userPost;
 
     @OneToMany(mappedBy = "postComment", cascade = CascadeType.ALL)
-    Set<CommentEntity> comments;
+    private Set<CommentEntity> comments;
+    @Column(name = "upvote")
+    private int upvote;
+    @Column(name = "down_vote")
+    private int downVote;
 
-    @OneToMany(mappedBy = "postVote", cascade = CascadeType.ALL)
-    Set<VoteEntity> votes;
-
-    @Column(name = "vote_count")
-    int voteCount;
 
     @OneToMany(mappedBy = "postReport", cascade = CascadeType.ALL)
-    List<ReportEntity> reports;
+    private List<ReportEntity> reports;
 
     @Column(name = "created_at")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 }

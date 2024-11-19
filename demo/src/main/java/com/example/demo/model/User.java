@@ -1,9 +1,11 @@
 package com.example.demo.model;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import com.example.demo.dto.UserRegisterDto;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -24,22 +26,29 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    String username;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password_hash")
-    String password;
+    private String password;
 
     @Column(name = "email")
-    String email;
+    private String email;
+    @Column(name = "display_name")
+    private String displayName;
 
     @Column(name = "created_at")
-    Long createdAt;
+    private Date createdAt;
 
 //    @OneToMany(mappedBy = "userVote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    List<VoteEntity> votesUser;
 //
-//    @OneToMany(mappedBy = "userPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<PostEntity> postsUser;
+    @OneToMany(mappedBy = "userPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<PostEntity> postsUser;
 //
 //    @OneToMany(mappedBy = "userComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    List<CommentEntity> commentsUser;
@@ -69,32 +78,18 @@ public class User implements UserDetails {
 //    List<ReplyEntity> repliesUser;
 
     @Column(name = "role")
-
     private String role;
-
+    public User(UserRegisterDto userRegisterDto){
+        this.displayName = userRegisterDto.getDisplayName();
+        this.email = userRegisterDto.getEmail();
+        this.username = userRegisterDto.getEmail();
+        this.password = userRegisterDto.getPassword();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.role));
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 }
