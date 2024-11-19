@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
@@ -35,7 +36,7 @@ public class MessageEntity {
     private String imgUrl;
     @Column(name = "video")
     private String videoUrl;
-
+    @CreationTimestamp
     @Column(name = "time_send")
     private Timestamp timeSend;
 }

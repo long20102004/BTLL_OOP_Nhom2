@@ -77,11 +77,11 @@ body {
 }
 #messages{
     overflow-y: auto;
-    width: 100%
+    width: 93%
 }
-#messages::-webkit-scrollbar{
-    display: none;
-}
+/*#messages::-webkit-scrollbar{*/
+/*    display: none;*/
+/*}*/
 .invisible{
     display: none;
 }
@@ -121,7 +121,7 @@ ul{
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    width: 90%;
+    width: 95%;
 }
 .chat-message img {
     width: 30px;
@@ -174,4 +174,7 @@ ul{
     font-size: 24px;
     cursor: pointer;
     margin-left: 10px;
+}
+a{
+    text-decoration: none;
 }

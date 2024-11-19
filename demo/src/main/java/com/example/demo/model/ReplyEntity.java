@@ -5,30 +5,30 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "replies")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReplyEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "comment_id")
-    CommentEntity commentReply;
+    private CommentEntity commentReply;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User userReply;
+    private User userReply;
 
     @Column(name = "content")
-    byte[] content;
+    private String content;
 
     @Column(name = "created_at")
-    java.sql.Timestamp createdAt;
+    private Timestamp createdAt;
 }

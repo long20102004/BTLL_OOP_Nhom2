@@ -28,18 +28,12 @@ public class CommentEntity {
     @JoinColumn(name = "user_id")
     private User userComment;
 
-    @OneToMany(mappedBy = "commentReply", cascade = CascadeType.ALL)
-    List<ReplyEntity> replyComment;
-
-    @OneToMany(mappedBy = "commentVote", cascade = CascadeType.ALL)
-    List<VoteEntity> votes;
-
-    @OneToMany(mappedBy = "commentReport", cascade = CascadeType.ALL)
-    List<ReportEntity> reports;
-
-    @Column(name = "body")
-    byte[] body;
-
     @Column(name = "created_at")
     Timestamp createdAt;
+    @Column(name = "content")
+    private String content;
+    @Column(name = "upvote")
+    private int upvote;
+    @Column(name = "downvote")
+    private int downVote;
 }

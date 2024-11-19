@@ -1,195 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Chat UI</title>
 
     <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+            rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="/styles/chat.css" />
-    <link rel="stylesheet" href="/styles/NavBar.css" />
-  </head>
+    <link rel="stylesheet" href="/styles/chat.css"/>
+    <link rel="stylesheet" href="/styles/NavBar.css"/>
+    <link rel="stylesheet" href="/styles/search.css"/>
+</head>
 
 
+<body>
+<div id="sender-id" class="invisible" th:text="${currentUser.getId()}"></div>
 
-  <body onload="connect()">
-  <div id="sender-id" class="invisible"  th:text="${currentUser.getId()}"></div>
-
-    <!-- Navbar Section -->
-    <nav class="navbar">
-      <ul class="menu">
+<!-- Navbar Section -->
+<nav class="navbar">
+    <ul class="menu">
         <li>
-          <button class="tab-button">Top1Fifai</button>
+            <a class="tab-button" href="http://localhost:8080">DEVERS</a>
         </li>
         <li>
-          <button class="tab-button">Relevant</button>
+            <button class="tab-button">Relevant</button>
         </li>
         <li>
-          <button class="tab-button">Latest</button>
+            <button class="tab-button">Latest</button>
         </li>
         <li>
-          <button class="tab-button">Top</button>
+            <button class="tab-button">Top</button>
         </li>
-      </ul>
-      <div class="search">
-        <input
-          type="text"
-          placeholder="Search for something"
-          class="search-input"
-        />
-      </div>
-      <button class="create-post">Create post</button>
-      <div class="profile-im">
-        <img src="/imgs/profileImg.png" alt="Profile" class="profile-img" />
-      </div>
-    </nav>
-    <div class="container">
-      <div class="sidebar">
-        <input type="text" placeholder="Search for chat" />
+    </ul>
+    <div class="search">
+        <img src="/imgs/kính%20lúp.png">
+        <input class="item1" id="search-input" placeholder="Search for something">
+        <div id="search-results"></div>
+    </div>
+    <a class="create-post" href="/ask-question">Create post</a>
+    <div class="profile-im">
+        <img src="/imgs/profileImg.png" alt="Profile" class="profile-img"/>
+    </div>
+</nav>
+<div class="container">
+    <div class="sidebar">
+        <input type="text" placeholder="Search for chat"/>
         <ul class="chat-list" th:each="user: ${otherUsers}">
-          <li class="active">
-            <form th:action="@{/chat/{id}(id=${user.getId()})}" method="GET">
-              <button type="submit" style="all: unset; cursor: pointer">
-                <img src="/imgs/avatar.png" alt="Avatar" />
-                <div>
-                  <div class="name" th:text="${user.getDisplayName()}"></div>
-                  <div class="message-preview">Oh no</div>
-                </div>
-              </button>
-            </form>
-          </li>
-        </ul>
-      </div>
-
-      <div th:if="${receiver != null}" class="chat-container">
-
-        <div id="receiver-id" class="invisible"  th:text="${receiver.getId()}"></div>
-
-        <div class="chat-area">
-          <div class="chat-header">
-            <img src="/imgs/avatar.png" alt="Avatar" />
-            <div class="name" th:text="${receiver.getDisplayName()}"></div>
-          </div>
-
-          <ul  id="messages">
-            <li th:each="message: ${messages}" >
-
-              <div th:if="${message.getSender().id != currentUser.id}" class="chat-message">
-                <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar" />
-
-                  <div th:if="${message.getContent() != ''}">
-                    <div
-                      class="text"
-                      th:text="${T(java.lang.String).valueOf(message.content)}"
-                    ></div>
-                  </div>
-                  <div th:if="${message.getImgUrl() != null}">
-                    <img
-                      th:src="@{${message.getImgUrl()}}"
-                      class="image"
-                      alt="Image Message"
-                    />
-                  </div>
-              </div>
-
-
-                <div th:if="${message.getSender().id == currentUser.id}" class="chat-message self">
-                    <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
-                    <div th:if="${message.getContent() != ''}">
-                        <div
-                                class="text"
-                                th:text="${T(java.lang.String).valueOf(message.content)}"
-                        ></div>
-                    </div>
-                    <div th:if="${message.getImgUrl() != null}">
-                        <img
-                                th:src="@{${message.getImgUrl()}}"
-                                class="image"
-                                alt="Image Message"
-                        />
-                    </div>
-
-                </div>
+            <li class="active">
+                <form th:action="@{/chat/{id}(id=${user.getId()})}" method="GET">
+                    <button type="submit" style="all: unset; cursor: pointer; width: 100%">
+                        <img src="/imgs/avatar.png" alt="Avatar"/>
+                        <div>
+                            <div class="name" th:text="${user.getDisplayName()}"></div>
+                            <div class="message-preview">Oh no</div>
+                        </div>
+                    </button>
+                </form>
             </li>
-          </ul>
-          <!-- Tin nhắn của bản thân -->
-
-          <form
-            class="message-input"
-            id="chat-form"
-            enctype="multipart/form-data"
-          >
-            <input
-              type="text"
-              id="message-send"
-              name="message"
-              placeholder="Type a message..."
-            />
-            <input type="file" id="image" name="image" accept="image/*" />
-            <button type="submit">Send😊</button>
-          </form>
-        </div>
-      </div>
+        </ul>
     </div>
 
-    <script>
-      let ws;
-      let senderId = document.getElementById('sender-id').textContent;
-      let receiverId = document.getElementById('receiver-id').textContent;
-      let messages = document.getElementById('messages');
+    <div th:if="${receiver != null}" class="chat-container">
 
-      function connect() {
-        ws = new WebSocket('ws://' + window.location.host + '/ws/chat?user=' + senderId);
+        <div id="receiver-id" class="invisible" th:text="${receiver.getId()}"></div>
 
-        document.getElementById('chat-form').addEventListener('submit', function(event) {
-          // event.preventDefault(); // Prevent the default form submission behavior
-          sendMessage();
-        });
+        <div class="chat-area">
+            <div class="chat-header">
+                <img src="/imgs/avatar.png" alt="Avatar"/>
+                <div class="name" th:text="${receiver.getDisplayName()}"></div>
+            </div>
 
-        ws.onmessage = function(event) {
-          let messageElement = document.createElement("div");
-          messageElement.classList.add("chat-message")
-          let data = JSON.parse(event.data);
-          messageElement.innerHTML = `
-            <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
-                <div>
-                  <div class="text">${data.content}</div>
-                </div>
+            <ul id="messages">
+                <li th:each="message: ${messages}">
 
+                    <div th:if="${message.getSender().id != currentUser.id}" class="chat-message">
+                        <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
+
+                        <div th:if="${message.getContent() != ''}">
+                            <div
+                                    class="text"
+                                    th:text="${T(java.lang.String).valueOf(message.content)}"
+                            ></div>
+                        </div>
+                        <div th:if="${message.getImgUrl() != null}">
+                            <img
+                                    th:src="@{${message.getImgUrl()}}"
+                                    class="image"
+                                    alt="Image Message"
+                            />
+                        </div>
+                    </div>
+
+
+                    <div th:if="${message.getSender().id == currentUser.id}" class="chat-message self">
+                        <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
+                        <div th:if="${message.getContent() != ''}">
+                            <div
+                                    class="text"
+                                    th:text="${T(java.lang.String).valueOf(message.content)}"
+                            ></div>
+                        </div>
+                        <div th:if="${message.getImgUrl() != null}">
+                            <img
+                                    th:src="@{${message.getImgUrl()}}"
+                                    class="image"
+                                    alt="Image Message"
+                            />
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+            <!-- Tin nhắn của bản thân -->
+
+            <div class="message-input" id="chat-form" enctype="multipart/form-data">
+                <input
+                        type="text"
+                        id="message-send"
+                        name="message"
+                        placeholder="Type a message..."
+                />
+                <input type="file" id="image" name="image" accept="image/*"/>
+                <button type="button" id="send-button" onclick="sendMessage()">Send😊</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    let chatWs;
+    let senderChatId = document.getElementById('sender-id').textContent;
+    let receiverId = document.getElementById('receiver-id').textContent;
+    let messages = document.getElementById('messages');
+
+    function connect() {
+        messages.scrollTop = messages.scrollHeight + 20;
+        chatWs = new WebSocket('ws://' + window.location.host + '/ws/chat?user=' + senderChatId);
+        chatWs.onmessage = function (event) {
+            let messageElement = document.createElement("div");
+            messageElement.classList.add("chat-message");
+            let data = JSON.parse(event.data);
+            messageElement.innerHTML = `
+        <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
+        <div>
+          <div class="text">${data.content}</div>
+        </div>
       `;
-          messages.appendChild(messageElement);
+            messages.appendChild(messageElement);
         };
-      }
-      function sendMessage() {
+    }
+
+    function sendMessage() {
+        messages.scrollTop = messages.scrollHeight + 20;
+
         let input = document.getElementById('message-send');
         let content = input.value;
+        let fileInput = document.getElementById('image');
+        let file = fileInput.files[0];
+
         let message = {
-            sender : senderId,
+            sender: senderChatId,
             receiver: receiverId,
             content: content
         };
-        ws.send(JSON.stringify(message));
 
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                message.image = event.target.result;
+                chatWs.send(JSON.stringify(message));
+            };
+            reader.readAsDataURL(file);
+        } else {
+            chatWs.send(JSON.stringify(message));
+        }
 
         let messageElement = document.createElement("div");
-        messageElement.classList.add("chat-message self");
+        messageElement.classList.add("chat-message", "self");
         messageElement.innerHTML = `
-            <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
-                <div>
-                  <div class="text">${content}</div>
-                </div>
-
-      `;
+      <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
+      <div>
+        <div class="text">${content}</div>
+      </div>
+    `;
         messages.appendChild(messageElement);
         input.value = '';
-      }
-    </script>
-  </body>
+        fileInput.value = '';
+    }
+
+    connect();
+</script>
+<script src="/js/search.js"></script>
+
+</body>
 </html>
