@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interests Layout</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <style>
+    body, html {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      height: 100%; 
+      background-color: #A7E6FF;
+      background: 
+        url('imgs/background.png'), /* Lớp ảnh nền */
+        #A7E6FF; /* Lớp màu nền */
+      background-size: cover; /* Ảnh phủ kín */
+      justify-content: center; /* Căn giữa ngang */
+      background-size: cover; /* Ảnh phủ kín */
+      background-repeat: no-repeat; 
+      background-attachment: fixed; 
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 94%;
+      height: 90vh;
+      padding: 40px;
+      
+    }
+
+    .title {
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #050C9C;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      justify-content: space-around;
+      gap: 5%;
+      height: 100%;
+    }
+
+    .box {
+      padding: 20px 0;
+      border: 3px solid;
+      display: flex;
+      border-radius: 20px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      background-color: white; /* White background for the box */
+    }
+
+    /* Colors for each column */
+    .box.green { border-color: green; }
+    .box.red { border-color: red; }
+    .box.yellow { border-color: gold; }
+    .box.blue { border-color: blue; }
+    .box.brown { border-color: brown; }
+    .box.pink { border-color: hotpink; }
+    .box.light-green { border-color: limegreen; }
+    .box.cyan { border-color: cyan; }
+    .box.orange { border-color: orange; }
+    .box.dark-brown { border-color: chocolate; }
+    .box.dark-blue { border-color: darkblue; }
+    .box.magenta { border-color: magenta; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Interests</div>
+    <div class="grid">
+      <div class="box green">Front-End Development</div>
+      <div class="box red">Back-End Development</div>
+      <div class="box yellow">Full-Stack Development</div>
+      <div class="box blue">Mobile Development (iOS, Android)</div>
+      <div class="box brown">Game Development</div>
+      <div class="box pink">Embedded Systems Development</div>
+      <div class="box light-green">Data Analysis</div>
+      <div class="box cyan">Data Engineering</div>
+      <div class="box orange">Machine Learning</div>
+      <div class="box dark-brown">Artificial Intelligence (AI)</div>
+      <div class="box dark-blue">Deep Learning</div>
+      <div class="box magenta">Natural Language Processing (NLP)</div>
+      <div class="box green">Computer Vision</div>
+      <div class="box red">Network Security</div>
+      <div class="box yellow">Information Security</div>
+      <div class="box blue">Application Security</div>
+      <div class="box brown">Cloud Security</div>
+      <div class="box pink">Network Administration</div>
+      <div class="box light-green">Network Engineering</div>
+      <div class="box cyan">Cloud Architecture</div>
+      <div class="box green">Cloud Development</div>
+      <div class="box red">DevOps and SRE (Site Reliability Engineering)</div>
+      <div class="box yellow">Database Administration</div>
+      <div class="box blue">Big Data</div>
+      <div class="box brown">NoSQL Databases (MongoDB, Cassandra)</div>
+      <div class="box pink">IT Support (Help Desk)</div>
+      <div class="box light-green">Blockchain Development</div>
+      <div class="box cyan">IoT Development</div>
+    </div>
+  </div>
+</body>
+</html>
