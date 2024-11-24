@@ -6,7 +6,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.MessageRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.socket.ChatWebSocketHandler;
-import com.example.demo.util.InputSanitizer;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,16 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class ChatController {
 
-    @Autowired
     private MessageRepository messageRepository;
-    @Autowired
     private UserRepository userRepository;
 //    @Autowired
 //    private SSEHandler sseHandler;
 
-    private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
 
 
     @GetMapping("/chat")
@@ -98,11 +96,5 @@ public class ChatController {
 //        return "redirect:/chat/{receiverId}";
 //    }
 
-    private String saveFile(MultipartFile file) throws IOException {
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        Path path = Paths.get(UPLOAD_DIR + fileName);
-        Files.createDirectories(path.getParent());
-        Files.write(path, file.getBytes());
-        return fileName;
-    }
+
 }

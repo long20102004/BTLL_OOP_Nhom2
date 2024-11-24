@@ -412,3 +412,40 @@ a{
     border-radius: 10px;
     margin-bottom: 12px;
 }
+.upload-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload-button {
+    background-color: #007BFF;
+    color: #ffffff;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+.file-name {
+    font-size: 0.9rem;
+    color: #555555;
+}
+.image-preview {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

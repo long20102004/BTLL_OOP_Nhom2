@@ -1,120 +1,298 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile Page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Page</title>
 
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
-  <!-- CSS Files -->
-  <link rel="stylesheet" href="/styles/Profile.css" />
-  <link rel="stylesheet" href="/styles/ProfileCard.css" />
-  <link rel="stylesheet" href="/styles/PostCard.css" />
-  <link rel="stylesheet" href="/styles/NavBar.css" />
-  <link rel="stylesheet" href="/styles/SkillsLanguagesAndAvailableFor.css" />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/styles/Profile.css"/>
+    <link rel="stylesheet" href="/styles/ProfileCard.css"/>
+    <link rel="stylesheet" href="/styles/PostCard.css"/>
+    <link rel="stylesheet" href="/styles/NavBar.css"/>
+    <link rel="stylesheet" href="/styles/main.css"/>
+    <link rel="stylesheet" href="/styles/SkillsLanguagesAndAvailableFor.css"/>
+    <link rel="stylesheet" href="/styles/dropdown.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/search.css">
+    <link rel="stylesheet" href="/styles/general.css">
 
 </head>
 <body>
-  
-  <!-- Navbar Section -->
-  <nav class="navbar">
-    <ul class="menu">
-      <li><button class="tab-button">DEVERS</button></li>
-      <li><button class="tab-button">Relevant</button></li>
-      <li><button class="tab-button">Latest</button></li>
-      <li><button class="tab-button">Top</button></li>
-    </ul>
+<div id="sender-id" class="invisible" th:text="${user.getId()}" style="display: none"></div>
+
+<!-- Navbar Section -->
+<div class="header">
+    <div class="item" onclick="window.location.href='/'">DEVERS</div>
+    <div class="item" onclick="window.location.href='/'">RELEVANT</div>
+    <div class="item" onclick="window.location.href='/'">LATEST</div>
+    <div class="item" onclick="window.location.href='/'">TOP</div>
     <div class="search">
-        <label>
-            <input type="text" placeholder="Search for something" class="search-input" />
-        </label>
+        <img src="/imgs/kính%20lúp.png">
+        <input class="item1" id="search-input" placeholder="Search for something">
+        <div id="search-results"></div>
     </div>
-    <button class="create-post">Create post</button>
-    <div class="profile-im">
-      <img src="/imgs/profileImg.png" alt="Profile" class="profile-img" />
+
+    <div class="createacc">
+        <a class="item2" href="/chat">Chat</a>
     </div>
-  </nav>
 
-  <!-- Main Container -->
-  <div class="container">
+    <div class="user-dropdown">
+        <img id="user-avatar" class="avatar" th:src="${user.getAvatar()}" alt="User Avatar">
+        <div id="dropdown-menu" class="dropdown hidden">
+            <a th:href="@{/profile/{id}(id=${user.getId()})}">Profile</a>
+            <a href="/chat">Chat</a>
+            <a href="/posts">Posts</a>
+            <a id="logout-button-dropdown" href="/logout">Logout</a>
+        </div>
+    </div>
+</div>
 
-      <!-- Profile Card Section -->
+<!-- Main Container -->
+<div class="container">
+
+    <!-- Profile Card Section -->
     <div class="card-container">
         <div class="blue-background"></div>
         <div class="profile-card">
-            <img src="/imgs/profileImg.png" alt="Profile" class="profile-image" />
+            <img th:src="${user.avatar}" alt="Profile" class="profile-image"/>
             <div class="profile-body">
-            <div class="profile-header">
-                <h2 th:text="${user.getDisplayName()}"></h2>
-                <p>Hello</p>
-            </div>
-            <hr />
-            <div class="profile-stats">
-                <div class="stat-item">
-                    <img src="/imgs/posts.png" alt="Posts" class="stat-icon" />
-                    <p>0 posts published</p>
+                <div class="profile-header">
+                    <h2 th:text="${user.getDisplayName()}"></h2>
+                    <p>Hello</p>
                 </div>
-                <div class="stat-item">
-                    <img src="/imgs/cmts.png" alt="Comments" class="stat-icon" />
-                    <p>0 comments written</p>
-                </div>
-                <div class="stat-item">
-                    <img src="/imgs/tags.png" alt="Tags" class="stat-icon" />
-                    <p>0 tags followed</p>
+                <hr/>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <img src="/imgs/posts.png" alt="Posts" class="stat-icon"/>
+                        <p th:text="${posts.size()} + ' posts published'"></p>
+                    </div>
+                    <div class="stat-item">
+                        <img src="/imgs/cmts.png" alt="Comments" class="stat-icon"/>
+                        <p th:text="${user.getCommentsUser().size()} + ' comments written'"></p>
+                    </div>
+                    <div class="stat-item">
+                        <img src="/imgs/tags.png" alt="Tags" class="stat-icon"/>
+                        <p th:text="${user.getTagEntities().size()} + ' tags followed'"></p>
+                    </div>
                 </div>
             </div>
-            </div>
-            <button class="edit-button">Edit profile</button>
+            <button class="edit-button"
+                    th:if="${user.id != null} and ${currentUserId != null} and ${user.id == currentUserId}">
+                Edit profile
+            </button>
+
+            <button class="follow-button"
+                    th:if="${user.id != null} and ${currentUserId != null} and ${user.id != currentUserId} and !${isFollowing}"
+                    th:data-follower-id="${currentUserId}"
+                    th:data-followed-id="${user.id}"
+                    onclick="followUser(this)">
+                Follow
+            </button>
+
+            <button class="unfollow-button"
+                    th:if="${user.id != null} and ${currentUserId != null} and ${user.id != currentUserId} and ${isFollowing}"
+                    th:data-follower-id="${currentUserId}"
+                    th:data-followed-id="${user.id}"
+                    onclick="unfollowUser(this)">
+                Unfollow
+            </button>
+
         </div>
     </div>
+
 
     <div class="main-content">
-        <div class="sidebar">
-      
+        <div class="sidebar1">
+
             <!-- Skills/Languages Section -->
             <div class="section">
-              <h3>Skills/Languages</h3>
-              <hr />
-              <p>Language 1</p>
-              <p>Language 2</p>
+                <h3>Skills/Languages</h3>
+                <hr/>
+                <p>Language 1</p>
+                <p>Language 2</p>
             </div>
-      
+
             <!-- Available For Section -->
             <div class="section">
-              <h3>Available for</h3>
-              <hr />
-              <p>Freelance or full-time opportunities</p>
+                <h3>Available for</h3>
+                <hr/>
+                <p>Freelance or full-time opportunities</p>
             </div>
-      
+
         </div>
-    
-          <!-- Post Card Section -->
-        <div class="post-card">
-            <div class="post-header">
-              <img src="/imgs/profileImg.png" alt="Post User" class="post-image" />
-              <div>
-                <h4>Username</h4>
-                <p>Date</p>
-              </div>
-            </div>
-            <p>Post content here...</p>
-            <div class="post-tags">
-              <span class="tag">Tag1</span>
-              <span class="tag">Tag2</span>
-            </div>
-            <div class="post-footer">
-              <span class="likes">0 likes</span>
-              <span class="comments">0 comments</span>
-              <img class="star" src="/imgs/star.png" alt="Favourite"/>
-              <img class="sign" src="/imgs/sign.png" alt="Sign"/>
+
+        <div class="menu-post">
+            <div th:each="post: ${posts}">
+                <a class="post1" th:href="@{/questions/{id}(id=${post.id})}">
+
+                    <div class="post1-status">
+                        <img src="/imgs/avatar1.png">
+
+                        <div class="user">
+                            <div class="username" th:text="${post.getUserPost().getDisplayName()}"></div>
+                            <div class="timestamp"
+                                 th:text="${#dates.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm:ss')}"></div>
+                            <h3 th:text="${post.getTitle()}"></h3>
+                            <p th:text="${post.getBody()}"></p>
+                            <div class="hashtags">
+                                <div class="hashtag" th:each="tag: ${post.getPostsTag()}" th:text="${tag.getName()}">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="post1-react">
+                        <div class="reaction">
+                            <div class="vote">
+                                <img id="upvote-icon" src="/imgs/upvote.svg" th:text="${post.getUpvote()}">
+                                <img id="downvote-icon" src="/imgs/downvote.svg" th:text="${post.getDownVote()}">
+                            </div>
+                            <div class="comment">
+                                <img id="comment-icon" src="/imgs/comment.svg" th:text="${post.getComments().size()}">
+                            </div>
+                            <div class="tick">
+                                <img src="/imgs/Star.png">
+                                <img src="/imgs/bookmarks.png">
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
 
-  </div>
+</div>
+<div id="edit-modal" class="edit-modal hidden">
+    <div class="modal-content">
+        <h3 class="modal-title">Edit Profile</h3>
+        <form id="edit-form" class="modal-form" th:action="@{/profile/edit}" method="post"
+              enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="avatar" class="form-label">Profile Image</label>
+                <label for="avatar" class="custom-file-upload">
+                    <span id="file-chosen">Choose a file</span>
+                    <input type="file" id="avatar" name="avatar" accept="image/*"/>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="new-display-name" class="form-label">Display Name</label>
+                <input type="text" id="new-display-name" name="newDisplayName" placeholder="Enter new display name"
+                       class="form-input" th:value="${user.displayName}"/>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="form-label" onclick="window.location.href='/tags'">Choose tags</button>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" class="save-button">Save</button>
+                <button type="button" class="cancel-button"
+                        onclick="document.getElementById('edit-modal').classList.add('hidden')">Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    // // Elements
+    const editButton = document.querySelector(".edit-button");
+    const modal = document.getElementById("edit-modal");
+    const saveButton = document.querySelector(".save-button");
+    const cancelButton = document.querySelector(".cancel-button");
+    const displayNameField = document.getElementById("display-name");
+    const avatarInput = document.getElementById("avatar");
+    const displayNameText = document.querySelector(".profile-header h2");
+    const profileImage = document.querySelector(".profile-image");
+
+    // Open the modal
+    editButton.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+        displayNameField.value = displayNameText.textContent; // Pre-fill with current name
+    });
+
+    // Close the modal
+    cancelButton.addEventListener("click", () => {
+        modal.classList.add("hidden");
+    });
+
+    // Save changes
+    saveButton.addEventListener("click", () => {
+        const newDisplayName = displayNameField.value;
+        const newAvatar = avatarInput.files[0];
+
+        if (newDisplayName) {
+            displayNameText.textContent = newDisplayName;
+        }
+
+        if (newAvatar) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                profileImage.src = e.target.result; // Update the avatar
+            };
+            reader.readAsDataURL(newAvatar);
+        }
+
+        modal.classList.add("hidden"); // Close the modal
+    });
+
+    function followUser(button) {
+        const followerId = button.getAttribute('data-follower-id');
+        const followedId = button.getAttribute('data-followed-id');
+
+        fetch(`/api/follow/${followerId}/${followedId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.reload(); // Reload the page to update the button
+                } else {
+                    alert('Failed to follow');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to follow');
+            });
+    }
+
+    function unfollowUser(button) {
+        const followerId = button.getAttribute('data-follower-id');
+        const followedId = button.getAttribute('data-followed-id');
+
+        if (confirm('Are you sure you want to unfollow?')) {
+            fetch(`/api/follow/${followerId}/${followedId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload(); // Reload the page to update the button
+                    } else {
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }
+
+</script>
+<script src="/js/dropdown.js"></script>
+<script src="/js/search.js"></script>
 </body>
 </html>

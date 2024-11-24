@@ -8,23 +8,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet">
+    <link rel="stylesheet" href="/styles/tag.css">
+    <link rel="stylesheet" href="/styles/search.css">
+    <link rel="stylesheet" href="/styles/dropdown.css">
+    <link rel="stylesheet" href="/styles/general.css">
+
     <title>Document</title>
 </head>
 <body>
+<div id="sender-id" th:text="${user.getId()}" style="display: none"></div>
+
 <div class="header">
-    <div class="item"> DEVERS</div>
-    <div class="item"> Relevant</div>
-    <div class="item"> Latest</div>
-    <div class="item"> Top</div>
+    <div class="item" onclick="window.location.href='/'">DEVERS</div>
+    <div class="item" onclick="window.location.href='/'">RELEVANT</div>
+    <div class="item" onclick="window.location.href='/'">LATEST</div>
+    <div class="item" onclick="window.location.href='/'">TOP</div>
     <div class="search">
         <img src="/imgs/kính%20lúp.png">
-        <div class="item1"> Search for something</div>
+        <input class="item1" id="search-input" placeholder="Search for something">
+        <div id="search-results"></div>
     </div>
-    <div class="createacc">
-        <a class="item2" href="http://localhost:8080/chat"> Chat</a>
-    </div>
-    <div class="createacc">
-        <a class="item2" href="http://localhost:8080/logout"> Logout</a>
+    <div class="user-dropdown">
+        <img id="user-avatar" class="avatar" th:src="${user.getAvatar()}" alt="User Avatar">
+        <div id="dropdown-menu" class="dropdown hidden">
+            <a th:href="@{/profile/{id}(id=${user.getId()})}">Profile</a>
+            <a href="/chat">Chat</a>
+            <a href="/posts">Posts</a>
+            <a id="logout-button-dropdown" href="/logout">Logout</a>
+        </div>
     </div>
 </div>
 
@@ -32,34 +43,26 @@
     <div class="sidebar">
         <ul>
             <li>
-                <a href="http://localhost:8080/">Home</a>
+                <a href="/">Home</a>
                 <img src="/imgs/home.png">
             </li>
             <li>
-                <a href="http://localhost:8080/profile">Accounts</a>
+                <a href="/profile">Accounts</a>
                 <img src="/imgs/account.png">
             </li>
             <li>
-                <a href="http://localhost:8080/">Charts</a>
-                <img src="/imgs/chart.png">
-            </li>
-            <li>
-                <a href="http://localhost:8080/chat">Chats</a>
+                <a href="/chat">Chats</a>
                 <img src="/imgs/chats.png">
             </li>
-            <!--            <li><img src="/imgs/noti.png">-->
-            <!--                Notifications-->
-            <!--            </li>-->
-            <!--            <li><img src="/imgs/tags.png"> Tags</li>-->
-            <!--            <li><img src="/imgs/gmail_groups.png"> About</li>-->
-            <!--            <li><img src="/imgs/setting.png"> Setting</li>-->
         </ul>
     </div>
 
     <div class="menu-post">
         <div class="create-post-form">
-            <form th:action="@{/up-post}" th:object="${post}" method="post">
-                <input type="hidden" th:field="*{id}" />
+            <form th:action="@{/up-post}" th:object="${post}" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}"/>
+
+                <!-- Title and content fields -->
                 <div class="form-group">
                     <label for="title">Title:</label>
                     <input type="text" id="title" name="title" th:field="*{title}" required>
@@ -68,13 +71,30 @@
                     <label for="content">Content:</label>
                     <textarea id="content" name="content" rows="5" th:field="*{body}" required></textarea>
                 </div>
-                <div class="form-group-tag">
-                    <div>Tag1</div>
-                    <div>Tag2</div>
-                    <div>Tag3</div>
-                    <div>Tag4</div>
+
+                <!-- File Upload Section -->
+                <div class="upload-container">
+                    <label for="file-upload" class="upload-button">
+                        <span>Upload Image (Not required)</span>
+                        <input type="file" name="image" id="file-upload" accept="image/*"/>
+                    </label>
+                    <img id="image-preview" class="image-preview" src="" alt="Image Preview" style="display:none;"/>
                 </div>
-                <button type="submit">ASK</button>
+
+                <!-- Tag Selection (Checkboxes) -->
+                <div class="container">
+                    <h1 class="title">Choose Tags for your post (Max 3)</h1>
+                    <div class="grid">
+                        <div class="box" th:each="tag:${tags}">
+                            <input type="checkbox" id="tag-[[${tag.id}]]" name="tags" th:value="${tag.name}" class="tag-checkbox">
+                            <label for="tag-[[${tag.id}]]" class="tag-label" th:text="${tag.name}"></label>
+                        </div>
+                    </div>
+                    <div class="error" id="error-message">You can select up to 3 tags only.</div>
+                    <div class="error" id="choose-message">You must select at least 1 tag.</div>
+                </div>
+
+                <button type="submit" id="submit-btn">ASK</button>
             </form>
         </div>
     </div>
@@ -87,8 +107,93 @@
         <div class="content"> Meme Monkey</div>
         <div class="cmt"> 100 comments</div>
     </div>
+</div>
 
-</div>
-</div>
+<script src="/js/search.js"></script>
+<script>
+    const boxes = document.querySelectorAll(".box");
+    const errorMessage = document.getElementById("error-message");
+    const notChooseTag = document.getElementById("choose-message");
+    const submitBtn = document.getElementById("submit-btn");
+
+    // Event listener for each box (checkbox)
+    boxes.forEach((box) => {
+        const checkbox = box.querySelector('input[name="tags"]'); // Get the checkbox inside the box
+
+        box.addEventListener("click", () => {
+            const selectedBoxes = document.querySelectorAll(".box.selected");
+            notChooseTag.style.visibility = "hidden"; // Hide "choose tag" message
+
+            if (box.classList.contains("selected")) {
+                box.classList.remove("selected"); // Unselect
+                checkbox.checked = false; // Uncheck
+            } else if (selectedBoxes.length < 3) {
+                box.classList.add("selected"); // Select
+                checkbox.checked = true; // Check the checkbox
+            } else {
+                errorMessage.style.visibility = "visible"; // Show error if 3 tags selected
+            }
+        });
+    });
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from submitting immediately
+
+        const tagCheckboxes = document.querySelectorAll('input[name="tags"]:checked'); // Get checked checkboxes
+        const selectedTags = [];
+
+        tagCheckboxes.forEach(function(checkbox) {
+            selectedTags.push(checkbox.value); // Add value of selected checkbox to array
+        });
+
+        console.log("Selected Tags: ", selectedTags); // Log selected tags to console
+
+        if (selectedTags.length === 0) {
+            notChooseTag.style.visibility = "visible"; // Show error if no tag selected
+        } else {
+            // You can submit the form after validation
+            form.submit();
+        }
+    });
+
+    // File input handling
+    const fileInput = document.getElementById('file-upload');
+    const imagePreview = document.getElementById('image-preview');
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Handle paste event to add image from clipboard
+    document.addEventListener('paste', (event) => {
+        const items = event.clipboardData.items;
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                const file = items[i].getAsFile();
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+
+                // Add the file to the file input
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+            }
+        }
+    });
+</script>
+<script src="/js/dropdown.js"></script>
 </body>
 </html>

@@ -65,7 +65,6 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(request ->
                         request.requestMatchers("/", "oauth2/**", "/login/**", "/register", "/imgs/**", "/styles/**", "/post-login", "/sign-up").permitAll()
                                 .requestMatchers("/edit/**").hasRole("ADMIN")
-                                .requestMatchers("/profile").hasRole("USER")
                                 .anyRequest().authenticated()).
                 sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
@@ -94,7 +93,7 @@ public class SecurityConfig {
                 } else {
                     id = (String) idAttribute;
                 }
-
+                String redirect = "/";
                 User user = (User) userService.findUserByUsername(id);
                 if (user == null) {
                     user = new User();
@@ -104,9 +103,8 @@ public class SecurityConfig {
                     user.setPassword("password");
                     user.setRole("USER");
                     userService.saveUser(user);
+                    redirect = "/tags";
                 }
-//                String token = jwtUtility.generateToken(user);
-//                request.setAttribute("token", token);
 
                 User userDetails = userService.findUserByUsername(id);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -116,7 +114,7 @@ public class SecurityConfig {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
 
-                getRedirectStrategy().sendRedirect(request, response, "/");
+                getRedirectStrategy().sendRedirect(request, response, redirect);
 
 
                 response.setContentType("text/html");

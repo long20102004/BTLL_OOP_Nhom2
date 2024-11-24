@@ -26,17 +26,7 @@ public class TagEntity {
     @Column(name = "created_at")
     Timestamp createdAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "post_tags",
-            joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    @ManyToMany(mappedBy = "postsTag")
     List<PostEntity> postsTag;
 
-    @ManyToMany
-    @JoinTable(
-            name = "comment_tags",
-            joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    List<CommentEntity> commentsTag;
 }

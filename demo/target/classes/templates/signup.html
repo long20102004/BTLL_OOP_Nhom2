@@ -184,6 +184,38 @@
             grid-template-columns: repeat(3,1fr);
             gap: 0.5rem;
         }
+        .upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .upload-button {
+            background-color: #007BFF;
+            color: #ffffff;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #0056b3;
+        }
+
+        .file-name {
+            font-size: 0.9rem;
+            color: #555555;
+        }
+
     </style>
 </head>
 <body>
@@ -192,7 +224,7 @@
     <p>DEVERS Community is a community of 2,158,913 amazing developers</p>
 
 
-    <form th:action="@{/sign-up}" th:object="${user}" method="post">
+    <form th:action="@{/sign-up}" th:object="${user}" method="post" enctype="multipart/form-data">
         <label>Email:</label>
         <input type="email" th:field="*{email}"/>
 
@@ -207,6 +239,15 @@
         <div th:if="${#fields.hasErrors('*')}" >
             <p th:each="err : ${#fields.errors('*')}" class="error" th:text="${err}"></p>
         </div>
+
+        <div class="upload-container">
+            <label for="file-upload" class="upload-button">
+                <span>Upload Avatar</span>
+                <input type="file" name="avatar" id="file-upload" accept="image/*" />
+            </label>
+            <p id="file-name" class="file-name">No file chosen</p>
+        </div>
+
         <div>
             <button type="submit">Sign Up</button>
         </div>
@@ -215,19 +256,19 @@
     <div class="separator">or</div>
 
     <div class="buttons">
-    <a href="http://localhost:8080/oauth2/authorization/facebook" >
+    <a href="/oauth2/authorization/facebook" >
         <button class="login-button login-facebook">
             <img src="/imgs/fb.png" alt="Facebook Logo"/>
             Continue with Facebook
         </button>
     </a>
-    <a href="http://localhost:8080/oauth2/authorization/google">
+    <a href="/oauth2/authorization/google">
         <button class="login-button login-google">
             <img src="/imgs/google.png" alt="Google Logo"/>
             Continue with Google
         </button>
     </a>
-    <a href="http://localhost:8080/oauth2/authorization/github">
+    <a href="/oauth2/authorization/github">
 
         <button class="login-button login-github">
             <img src="/imgs/github.png" alt="GitHub Logo"/>
