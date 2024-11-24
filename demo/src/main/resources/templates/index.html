@@ -9,27 +9,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet">
+    <link rel="stylesheet" href="/styles/dropdown.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/general.css">
     <title>Document</title>
 </head>
 <body>
 <div id="sender-id" th:text="${user.getId()}" style="display: none"></div>
 <div class="header">
-    <div class="item"> DEVERS</div>
-    <div class="item"> Relevant</div>
-    <div class="item"> Latest</div>
-    <div class="item"> Top</div>
+    <div class="item" onclick="window.location.href='/'">DEVERS</div>
+    <div class="item" onclick="window.location.href='/'">RELEVANT</div>
+    <div class="item" onclick="window.location.href='/'">LATEST</div>
+    <div class="item" onclick="window.location.href='/'">TOP</div>
     <div class="search">
         <img src="/imgs/kính%20lúp.png">
         <input class="item1" id="search-input" placeholder="Search for something">
         <div id="search-results"></div>
     </div>
 
-
     <div class="createacc">
-        <a class="item2" href="http://localhost:8080/chat"> Chat</a>
+        <a class="item2" href="/chat">Chat</a>
     </div>
-    <div class="createacc">
-        <a class="item2" href="http://localhost:8080/logout"> Logout</a>
+
+    <div class="user-dropdown">
+        <img id="user-avatar" class="avatar" th:src="${user.getAvatar()}" alt="User Avatar">
+        <div id="dropdown-menu" class="dropdown hidden">
+            <a th:href="@{/profile/{id}(id=${user.getId()})}">Profile</a>
+            <a href="/chat">Chat</a>
+            <a href="/posts">Posts</a>
+            <a id="logout-button-dropdown" href="/logout">Logout</a>
+        </div>
     </div>
 </div>
 
@@ -37,27 +46,20 @@
     <div class="sidebar">
         <ul>
             <li>
-                <a href="http://localhost:8080/">Home</a>
+                <a href="/">Home</a>
                 <img src="/imgs/home.png">
             </li>
             <li>
-                <a href="http://localhost:8080/profile">Accounts</a>
+                <a th:href="@{/profile/{id}(id=${user.getId()})}">Profile</a>
                 <img src="/imgs/account.png">
             </li>
             <li>
-                <a href="http://localhost:8080/">Charts</a>
-                <img src="/imgs/chart.png">
-            </li>
-            <li>
-                <a href="http://localhost:8080/chat">Chats</a>
+                <a href="/chat">Chats</a>
                 <img src="/imgs/chats.png">
             </li>
             <li><img src="/imgs/noti.png">
                 Notifications
             </li>
-            <!--            <li><img src="/imgs/tags.png"> Tags</li>-->
-            <!--            <li><img src="/imgs/gmail_groups.png"> About</li>-->
-            <!--            <li><img src="/imgs/setting.png"> Setting</li>-->
         </ul>
     </div>
 
@@ -66,18 +68,17 @@
             <a class="post1" th:href="@{/questions/{id}(id=${post.id})}">
 
                 <div class="post1-status">
-                    <img src="/imgs/avatar1.png">
+                    <img th:src="${post.getUserPost().getAvatar()}">
 
                     <div class="user">
                         <div class="username" th:text="${post.getUserPost().getDisplayName()}"></div>
                         <div class="timestamp"
-                             th:text="${#dates.format(post.getCreatedAt(), 'dd-mm-yyyy HH:mm:ss')}"></div>
+                             th:text="${#dates.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm:ss')}"></div>
                         <h3 th:text="${post.getTitle()}"></h3>
                         <p th:text="${post.getBody()}"></p>
                         <div class="hashtags">
-                            <div class="hashtag">#motconvit</div>
-                            <div class="hashtag">#aicutehontoi</div>
-                            <div class="hashtag">#hehehe</div>
+                            <div class="hashtag" th:each="tag: ${post.getPostsTag()}" th:text="${tag.getName()}">
+                            </div>
                         </div>
                     </div>
 
@@ -91,7 +92,7 @@
                             <img id="downvote-icon" src="/imgs/downvote.svg" th:text="${post.getDownVote()}">
                         </div>
                         <div class="comment">
-                            <img id="comment-icon" src="/imgs/comment.svg"> 100K comments
+                            <img id="comment-icon" src="/imgs/comment.svg" th:text="${post.getComments().size()}">
                         </div>
                         <div class="tick">
                             <img src="/imgs/Star.png">
@@ -117,5 +118,6 @@
 </div>
 </div>
 <script src="/js/search.js"></script>
+<script src="/js/dropdown.js"></script>
 </body>
 </html>

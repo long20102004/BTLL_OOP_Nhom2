@@ -1,0 +1,81 @@
+.title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #003366;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 80px;
+}
+
+.box {
+    padding: 15px;
+    background: #fff;
+    border: 2px solid #dde1e7;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.box:hover {
+    border-color: #003366;
+    background: #f0f8ff;
+    transform: scale(1.05);
+}
+
+.box:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Style for selected boxes */
+.box.selected {
+    background: #003366;
+    color: #fff;
+    border-color: #003366;
+    transform: scale(1.05);
+}
+
+/* Style for error message */
+.error {
+    margin-top: 20px;
+    color: red;
+    font-size: 14px;
+    visibility: hidden;
+}
+
+/* Submit button styling */
+.submit-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 30px;
+    background: #003366;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #0055a5;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+.submit-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}

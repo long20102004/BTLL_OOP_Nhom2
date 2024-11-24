@@ -36,7 +36,7 @@ public class PostEntity {
     private User userPost;
 
     @OneToMany(mappedBy = "postComment", cascade = CascadeType.ALL)
-    private Set<CommentEntity> comments;
+    private List<CommentEntity> comments;
     @Column(name = "upvote")
     private int upvote;
     @Column(name = "down_vote")
@@ -48,4 +48,16 @@ public class PostEntity {
 
     @Column(name = "created_at")
     private Timestamp createdAt;
+    @Column(name = "image")
+    private String imageUrl;
+    @Column(name = "upvoted")
+    private boolean upvoted;
+    @Column(name = "downvoted")
+    private boolean downvoted;
+    @ManyToMany
+    @JoinTable(
+            name = "post_tags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    List<TagEntity> postsTag;
 }

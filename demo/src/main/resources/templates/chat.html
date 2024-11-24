@@ -16,38 +16,44 @@
     <link rel="stylesheet" href="/styles/chat.css"/>
     <link rel="stylesheet" href="/styles/NavBar.css"/>
     <link rel="stylesheet" href="/styles/search.css"/>
+    <link rel="stylesheet" href="/styles/dropdown.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/general.css">
+
 </head>
 
 
 <body>
 <div id="sender-id" class="invisible" th:text="${currentUser.getId()}"></div>
+<div id="avatar" class="invisible" th:text="${currentUser.getAvatar()}"></div>
 
 <!-- Navbar Section -->
-<nav class="navbar">
-    <ul class="menu">
-        <li>
-            <a class="tab-button" href="http://localhost:8080">DEVERS</a>
-        </li>
-        <li>
-            <button class="tab-button">Relevant</button>
-        </li>
-        <li>
-            <button class="tab-button">Latest</button>
-        </li>
-        <li>
-            <button class="tab-button">Top</button>
-        </li>
-    </ul>
+<div class="header">
+    <div class="item" onclick="window.location.href='/'">DEVERS</div>
+    <div class="item" onclick="window.location.href='/'">RELEVANT</div>
+
+    <div class="item" onclick="window.location.href='/'">LATEST</div>
+    <div class="item" onclick="window.location.href='/'">TOP</div>
     <div class="search">
         <img src="/imgs/kính%20lúp.png">
         <input class="item1" id="search-input" placeholder="Search for something">
         <div id="search-results"></div>
     </div>
-    <a class="create-post" href="/ask-question">Create post</a>
-    <div class="profile-im">
-        <img src="/imgs/profileImg.png" alt="Profile" class="profile-img"/>
+
+    <div class="createacc">
+        <a class="item2" href="/ask-question">ASK</a>
     </div>
-</nav>
+
+    <div class="user-dropdown">
+        <img id="user-avatar" class="avatar" th:src="${currentUser.getAvatar()}" alt="User Avatar">
+        <div id="dropdown-menu" class="dropdown hidden">
+            <a th:href="@{/profile/{id}(id=${currentUser.getId()})}">Profile</a>
+            <a href="/chat">Chat</a>
+            <a href="/posts">Posts</a>
+            <a id="logout-button-dropdown" href="/logout">Logout</a>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="sidebar">
         <input type="text" placeholder="Search for chat"/>
@@ -55,7 +61,7 @@
             <li class="active">
                 <form th:action="@{/chat/{id}(id=${user.getId()})}" method="GET">
                     <button type="submit" style="all: unset; cursor: pointer; width: 100%">
-                        <img src="/imgs/avatar.png" alt="Avatar"/>
+                        <img th:src="${user.getAvatar()}" alt="Avatar"/>
                         <div>
                             <div class="name" th:text="${user.getDisplayName()}"></div>
                             <div class="message-preview">Oh no</div>
@@ -72,7 +78,7 @@
 
         <div class="chat-area">
             <div class="chat-header">
-                <img src="/imgs/avatar.png" alt="Avatar"/>
+                <img th:src="${receiver.getAvatar()}" alt="Avatar"/>
                 <div class="name" th:text="${receiver.getDisplayName()}"></div>
             </div>
 
@@ -80,7 +86,7 @@
                 <li th:each="message: ${messages}">
 
                     <div th:if="${message.getSender().id != currentUser.id}" class="chat-message">
-                        <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
+                        <img th:src="${receiver.getAvatar()}" class="avatar" alt="Your Avatar"/>
 
                         <div th:if="${message.getContent() != ''}">
                             <div
@@ -99,7 +105,7 @@
 
 
                     <div th:if="${message.getSender().id == currentUser.id}" class="chat-message self">
-                        <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
+                        <img th:src="${currentUser.getAvatar()}" class="avatar" alt="Your Avatar"/>
                         <div th:if="${message.getContent() != ''}">
                             <div
                                     class="text"
@@ -149,7 +155,7 @@
             messageElement.classList.add("chat-message");
             let data = JSON.parse(event.data);
             messageElement.innerHTML = `
-        <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
+        <img src="${data.avatar}" class="avatar" alt="Your Avatar"/>
         <div>
           <div class="text">${data.content}</div>
         </div>
@@ -159,6 +165,7 @@
     }
 
     function sendMessage() {
+        const senderAvatar = document.getElementById('avatar').textContent;
         messages.scrollTop = messages.scrollHeight + 20;
 
         let input = document.getElementById('message-send');
@@ -167,6 +174,7 @@
         let file = fileInput.files[0];
 
         let message = {
+            avatar: senderAvatar,
             sender: senderChatId,
             receiver: receiverId,
             content: content
@@ -186,7 +194,7 @@
         let messageElement = document.createElement("div");
         messageElement.classList.add("chat-message", "self");
         messageElement.innerHTML = `
-      <img src="/imgs/profileImg.png" class="avatar" alt="Your Avatar"/>
+      <img src=${senderAvatar} class="avatar" alt="Your Avatar"/>
       <div>
         <div class="text">${content}</div>
       </div>
@@ -199,6 +207,6 @@
     connect();
 </script>
 <script src="/js/search.js"></script>
-
+<script src="/js/dropdown.js"></script>
 </body>
 </html>

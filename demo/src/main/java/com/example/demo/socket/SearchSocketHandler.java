@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -42,9 +44,9 @@ public class SearchSocketHandler extends TextWebSocketHandler {
             if (!query.trim().isEmpty()) {
                 postEntityList = postRepository.findAllByQuery(query);
             }
+
             JSONObject response = new JSONObject();
             response.put("posts", postEntityList);
-
             session.sendMessage(new TextMessage(response.toString()));
         }
     }
@@ -53,4 +55,5 @@ public class SearchSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessions.values().remove(session);
     }
+
 }

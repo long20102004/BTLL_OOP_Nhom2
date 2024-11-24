@@ -14,14 +14,28 @@
     font-weight: 600;
     font-size: 24px;
 }
+.vote{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.vote-button{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:none;
+}
+.vote-count{
+    padding-top: 2rem;;
+}
 .vote > :hover{
     cursor: pointer;
-    /*content: url('/imgs/upvote-fill.svg');*/
 }
-.upvote-icon:hover{
+#upvote-icon:hover{
     content: url("/imgs/upvote-fill.svg");
 }
-.downvote-icon:hover{
+#downvote-icon:hover{
     content: url("/imgs/downvote-fill.svg");
 }
 .comment-icon:hover{
@@ -31,7 +45,9 @@
     color: #050C90;
 }
 
-
+.reaction > .comment{
+    margin-top: 7px;
+}
 .item1 {
 
     color: #8BA3CB;
@@ -187,7 +203,7 @@ body {
 
 .user p {
     margin-top: 5px;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 300;
 }
 
@@ -423,7 +439,7 @@ a{
     margin-top: 5px;
 }
 .reply{
-    margin-left: 3rem;
+    margin-left: 5rem;
 }
 .comment-vote{
     margin-top: 1rem;
@@ -431,4 +447,64 @@ a{
 .comment-vote > img{
     width: 1.5rem;
     height: 1rem;
+}
+.avatar{
+    border-radius: 2rem;
+}
+
+.reply-form {
+    margin-top: 10px;
+}
+
+.reply-form textarea {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+
+.reply-form .close-button {
+    margin-right: 3rem;
+    margin-top: 5px;
+    padding: 8px 13px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff0000;
+    color: white;
+    cursor: pointer;
+}
+.avatar:hover{
+    cursor: pointer;
+}
+
+.reply-form .close-button:hover {
+    background-color: #cc0000;
+}
+
+.reply-form .send-button {
+    margin-top: 5px;
+    padding: 8px 13px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0073e6;
+    color: white;
+    cursor: pointer;
+}
+
+.reply-form .send-button:hover {
+    background-color: #005bb5;
+}
+.image-holder {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.image-holder img {
+    max-width: 100%;
+    height: auto;
+    min-width: 700px; /* Set a minimum width */
+    min-height: 400px; /* Set a minimum height */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Choose Your Interests</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="stylesheet" href="/styles/general.css">
+
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            margin: 0;
+            background: #f5f7fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+    </style>
+    <link rel="stylesheet" href="/styles/tag.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="title">Choose Your Interests (Max 5)</h1>
+    <div class="grid">
+        <div class="box" th:each="tag : ${tags}" th:text="${tag.getName()}"
+             th:classappend="${#lists.contains(tagChose, tag)} ? 'selected' : ''"></div>
+    </div>
+    <div class="error" id="error-message">
+        You can select up to 5 interests only.
+    </div>
+</div>
+<button class="submit-btn" id="submit-btn" disabled>Submit</button>
+
+<script>
+    const boxes = document.querySelectorAll(".box");
+    const errorMessage = document.getElementById("error-message");
+    const submitBtn = document.getElementById("submit-btn");
+
+    // Update button state and toggle selected tags
+    boxes.forEach((box) => {
+        box.addEventListener("click", () => {
+            const selectedBoxes = document.querySelectorAll(".box.selected");
+
+            if (box.classList.contains("selected")) {
+                // Deselect if already selected
+                box.classList.remove("selected");
+                errorMessage.style.visibility = "hidden"; // Hide error message if shown
+            } else if (selectedBoxes.length < 5) {
+                // Select the box if under the limit
+                box.classList.add("selected");
+                errorMessage.style.visibility = "hidden"; // Hide error message if shown
+            } else {
+                // Show error if the limit is reached
+                errorMessage.style.visibility = "visible";
+            }
+
+            // Enable or disable submit button
+            submitBtn.disabled =
+                document.querySelectorAll(".box.selected").length === 0;
+        });
+    });
+
+    // Submit the selected tags
+    submitBtn.addEventListener("click", () => {
+        const selectedTags = Array.from(
+            document.querySelectorAll(".box.selected")
+        ).map((box) => box.textContent.trim());
+        console.log(selectedTags);
+        fetch("/user/setup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(selectedTags),
+        })
+            .then((response) => response.text())
+            .then((text) => {
+                if (text === "success") {
+                    window.location.href = "/";
+                } else {
+                    alert("Error submitting interests. Please try again.");
+                }
+            })
+            .catch((error) => {
+                alert("Network error. Please try again.");
+            });
+    });
+</script>
+</body>
+</html>

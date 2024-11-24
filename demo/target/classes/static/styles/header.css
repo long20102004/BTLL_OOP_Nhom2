@@ -1,0 +1,15 @@
+.header {
+    gap: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #A7E6FF;
+    height: 3em;
+    width: 95%;
+
+    padding-left: 30px;
+    padding-right: 30px;
+
+    font-weight: 600;
+    font-size: 24px;
+}

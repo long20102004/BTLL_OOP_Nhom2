@@ -1,5 +1,6 @@
 let ws;
 let senderId = document.getElementById('sender-id').textContent;
+
 function connect() {
     ws = new WebSocket('ws://' + window.location.host + '/ws/se?user=' + senderId);
     ws.onopen = function () {
@@ -16,21 +17,29 @@ function connect() {
                 const postElement = document.createElement('div');
                 console.log(post);
                 postElement.textContent = post.title;
-                postElement.addEventListener('click', function (){
+                postElement.addEventListener('click', function () {
                     window.location.href = 'http://localhost:8080/questions/' + post.id;
-                })
+                });
                 resultsContainer.appendChild(postElement);
             });
-        }
-        else{
+        } else {
             resultsContainer.style.display = 'none';
         }
     };
 
-    document.getElementById('search-input').addEventListener('input', function () {
-        const query = this.value;
-        ws.send(JSON.stringify({query: query}));
-    });
+    ws.onerror = function (error) {
+        console.error('WebSocket error: ', error);
+    };
 }
+
+document.getElementById('search-input').addEventListener('input', function () {
+    const query = this.value;
+    if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ query: query }));
+    } else if (ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
+        console.log('WebSocket is in CLOSING or CLOSED state, attempting to reconnect...');
+        connect();
+    }
+});
 
 connect();

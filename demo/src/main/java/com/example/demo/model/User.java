@@ -43,42 +43,31 @@ public class User implements UserDetails {
 
     @Column(name = "created_at")
     private Date createdAt;
-
-//    @OneToMany(mappedBy = "userVote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<VoteEntity> votesUser;
-//
     @OneToMany(mappedBy = "userPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<PostEntity> postsUser;
-//
-//    @OneToMany(mappedBy = "userComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<CommentEntity> commentsUser;
-//
-//    @OneToMany(mappedBy = "followingUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<FollowEntity> followingUser;
-//
-//    @OneToMany(mappedBy = "followedUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<FollowEntity> followedUser;
-//
-//    @OneToMany(mappedBy = "userSetting", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<UserSettingEntity> settingsUser;
-//
-//    @OneToMany(mappedBy = "userReport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<ReportEntity> reportsUser;
-//
-//    @OneToMany(mappedBy = "userNotification", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<NotificationEntity> notificationsUser;
-//
-//    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<MessageEntity> messagesSent;
-//
-//    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<MessageEntity> messagesReceived;
-//
-//    @OneToMany(mappedBy = "userReply", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    List<ReplyEntity> repliesUser;
+    @ManyToMany
+    @JoinTable(name = "users_tags",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<TagEntity> tagEntities;
+
+    @OneToMany(mappedBy = "userComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<CommentEntity> commentsUser;
+    @Column(name = "avatar")
+    private String avatar = "/imgs/avatar1.png";
+    @Column(name = "description")
+    private String description;
+    @Column(name = "rating")
+    private Integer rating = 0;
 
     @Column(name = "role")
     private String role;
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserFollow> following;
+
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserFollow> followers;
+
     public User(UserRegisterDto userRegisterDto){
         this.displayName = userRegisterDto.getDisplayName();
         this.email = userRegisterDto.getEmail();

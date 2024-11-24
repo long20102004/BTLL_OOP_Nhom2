@@ -3,14 +3,6 @@ body {
   margin: 0;
   background-color: #f4f4f4;
 }
-
-/* Sidebar for Skills/Languages and Available For */
-.sidebar {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
 /* Main Content for Profile and Post Card */
 .main-content {
   flex: 1;
@@ -24,7 +16,9 @@ body {
   flex-direction: column;
   
 }
-
+.post1{
+  width: 90%;
+}
 
 .section, .post-card, .profile-card {
   background-color: #fff;
@@ -33,3 +27,191 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Modal Overlay */
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top of all content */
+}
+
+.hidden {
+  display: none;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #ffffff; /* White background */
+  border-radius: 12px;
+  width: 90%; /* Mobile-friendly width */
+  max-width: 400px; /* Limit the width on larger screens */
+  padding: 20px 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); /* Soft shadow */
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Modal Title */
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+/* Modal Actions */
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.save-button,
+.cancel-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.save-button {
+  background-color: #007BFF;
+  color: #ffffff;
+}
+
+.save-button:hover {
+  background-color: #0056b3;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.cancel-button:hover {
+  background-color: #a71d2a;
+}
+
+/* Animation for Modal */
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Hide the original file input */
+input[type="file"] {
+  display: none;
+}
+
+/* Custom File Upload Label */
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #007BFF;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+}
+
+/* Hover and Focus Effects */
+.custom-file-upload:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 10px rgba(0, 123, 255, 0.5);
+}
+
+.custom-file-upload:active {
+  background-color: #003d7a;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for Chosen File Text */
+#file-chosen {
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-left: 8px;
+  color: #ffffff;
+}
+
+/* General button styles */
+button {
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+/* Follow button styles */
+.follow-button {
+  background-color: #007bff; /* Blue background */
+  color: #fff; /* White text */
+}
+
+.follow-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Unfollow button styles */
+.followed-button {
+  background-color: #e0e0e0; /* Light gray background */
+  color: #000; /* Black text */
+}
+
+.followed-button:hover {
+  background-color: #bdbdbd; /* Darker gray on hover */
+}
+
+/* Add active effect for button press */
+button:active {
+  transform: scale(0.95); /* Slightly shrink the button */
+}
