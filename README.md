@@ -99,6 +99,7 @@ Luồng hoạt động cơ bản của project
 ![image](https://github.com/user-attachments/assets/92fcfc00-a41c-48bf-b19d-9482b13953b8)
 ![image](https://github.com/user-attachments/assets/2b52b9ca-915f-41a1-9b54-77da724f3726)
 ![image](https://github.com/user-attachments/assets/b7897cc3-a487-4370-a6e5-f91c49e164be)
+![image](https://github.com/user-attachments/assets/3e5450a9-0182-47b8-89e5-c9987ed9fe6a)
 ![image](https://github.com/user-attachments/assets/c37457f7-b50d-4d17-b1df-51a0e46e1357)
 ![image](https://github.com/user-attachments/assets/0db5e70d-5e37-49df-8632-1aaa0b3046bb)
 
