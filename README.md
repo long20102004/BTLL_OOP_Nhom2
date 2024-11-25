@@ -26,8 +26,8 @@ Team hoạt động theo Gitflow để quản lý code. Mỗi thành viên sẽ 
   + `master`: Chứa code ổn định, đã qua kiểm tra và test kỹ lưỡng
   + `develop`: Chứa code mới nhất, đã qua review và test
   + `feature/`: Các nhánh chứa code đang phát triển, short-live, sau khi hoàn thành sẽ merge vào `develop`.
-  
-![alt text](image.png)
+  ![image](https://github.com/user-attachments/assets/11960564-e91d-4180-8c0e-d9c2e92ad8d5)
+
 
 Sau mỗi tuần, team sẽ merge `develop` vào `master` để release phiên bản mới.
 
